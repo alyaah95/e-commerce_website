@@ -1,0 +1,309 @@
+.navbar {
+    width: 100%;
+    background-color: #2c3e50;
+    /* A deep, professional blue */
+    color: white;
+    padding: 1rem 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+    /* Stronger, more defined shadow for depth */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    font-family: 'Poppins', sans-serif;
+    /* A modern, clean font. Ensure you link it in your HTML. */
+}
+
+.navbar-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-brand {
+    flex: 1;
+}
+
+.navbar-logo {
+    font-size: 1.9rem;
+    /* Slightly larger for prominence */
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    /* Subtle spacing for readability */
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+    /* Smooth transitions for all states */
+    padding: 0.5rem 0;
+    display: inline-block;
+}
+
+.navbar-logo:hover {
+    color: rgba(255, 255, 255, 0.8);
+    /* 🚀 لون أبيض شفاف عند التحويم */
+    transform: translateY(-3px) scale(1.02);
+    /* Slight lift and scale for engagement */
+}
+
+.navbar-menu {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    /* Reduced gap slightly for compactness */
+}
+
+.navbar-auth {
+    display: flex;
+    align-items: center;
+    /* Ensure items are vertically aligned */
+    gap: 0.8rem;
+    /* Small gap between auth links/buttons */
+    margin-right: 1rem;
+    list-style: none;
+    /* Remove default list styling */
+    padding: 0;
+    /* Remove default padding */
+    margin-bottom: 0;
+    /* Remove default bottom margin */
+}
+
+/* Base style for all auth links/buttons */
+.navbar-auth .nav-item .nav-link,
+.navbar-auth .nav-item button.nav-link {
+    display: flex;
+    /* Flexbox for icon and text alignment */
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    /* Space between icon and text */
+    color: white;
+    text-decoration: none;
+    font-size: 0.95rem;
+    /* Slightly smaller font for compactness */
+    font-weight: 600;
+    /* Bolder text */
+    padding: 0.6rem 1.2rem;
+    /* Comfortable padding */
+    border-radius: 25px;
+    /* Pill-shaped buttons */
+    transition: all 0.3s ease-in-out;
+    border: 2px solid transparent;
+    /* Transparent border for hover effect */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow */
+    cursor: pointer;
+    /* Indicate clickable element */
+}
+
+/* Specific styles for Login/Register links */
+.navbar-auth .nav-item .nav-link[to="/login"] {
+    background-color: #3498db;
+    /* Distinct blue for Login */
+    border-color: #3498db;
+}
+
+.navbar-auth .nav-item .nav-link[to="/register"] {
+    background-color: #2ecc71;
+    /* Fresh green for Register */
+    border-color: #2ecc71;
+}
+
+/* Style for Logout button */
+.navbar-auth .nav-item button.nav-link {
+    background-color: #e74c3c;
+    /* Red for Logout */
+    border-color: #e74c3c;
+}
+
+/* Hover effects for all auth links/buttons */
+.navbar-auth .nav-item .nav-link:hover,
+.navbar-auth .nav-item button.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    /* 🚀 خلفية بيضاء شفافة خفيفة عند التحويم */
+    color: white;
+    /* 🚀 النص يبقى أبيض أو يميل للرمادي الفاتح جداً */
+    border-color: rgba(255, 255, 255, 0.5);
+    /* 🚀 border أبيض شفاف عند التحويم */
+    transform: translateY(-3px) scale(1.02);
+    /* Lift and slight scale */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+    /* Enhanced shadow on hover */
+}
+
+/* Active (click) effect */
+.navbar-auth .nav-item .nav-link:active,
+.navbar-auth .nav-item button.nav-link:active {
+    transform: translateY(0) scale(0.98);
+    /* Returns to original position, slight shrink */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    /* Reduced shadow */
+}
+
+.link-icon {
+    font-size: 1.15rem;
+    /* Slightly larger icon size */
+}
+
+.navbar-cart {
+    position: relative;
+    padding: 0.6rem;
+    /* Good padding for a clickable area */
+    border-radius: 50%;
+    /* Circular shape for the cart */
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.05);
+    /* Subtle background */
+}
+
+.navbar-cart:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    /* 🚀 خلفية بيضاء شفافة أغمق عند التحويم */
+    transform: translateY(-3px) scale(1.05);
+    /* Lift and slight scale */
+}
+
+.cart-icon {
+    font-size: 1.6rem;
+    /* Prominent cart icon */
+    color: #fff;
+}
+
+.cart-count {
+    position: absolute;
+    top: -8px;
+    /* Positioned nicely above the cart icon */
+    right: -8px;
+    background-color: #e74c3c;
+    /* Bright red for visibility */
+    color: white;
+    border-radius: 50%;
+    width: 22px;
+    /* Slightly larger badge */
+    height: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8rem;
+    /* Readable font size */
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    /* Shadow for depth */
+}
+
+/* Adjustments for the language dropdown button */
+.dropdown-toggle {
+    background-color: #3b5998 !important;
+    /* A slightly different blue for contrast */
+    border-color: #3b5998 !important;
+    font-weight: 500;
+    transition: all 0.3s ease-in-out;
+    border-radius: 25px !important;
+    /* Make it pill-shaped too */
+    padding: 0.6rem 1.2rem !important;
+    /* Consistent padding */
+}
+
+.dropdown-toggle:hover {
+    background-color: #4c70ba !important;
+    /* 🚀 لون أزرق فاتح قليلاً عند التحويم */
+    border-color: #4c70ba !important;
+    transform: translateY(-3px) scale(1.02);
+    /* Lift and scale */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+}
+
+.dropdown-menu {
+    border-radius: 8px;
+    /* Rounded corners for the dropdown menu */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border: none;
+    background-color: #34495e;
+    /* Darker background for dropdown items */
+}
+
+.dropdown-item {
+    color: white;
+    /* White text for items */
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+    background-color: #4a6781;
+    /* Lighter background on hover/focus for items */
+    color: white;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .navbar-container {
+        padding: 0 1rem;
+    }
+
+    .navbar-auth {
+        gap: 0.6rem;
+        /* Tighter gap on smaller screens */
+        margin-right: 0.2rem;
+    }
+
+    /* Hide text, show only icons for auth links on small screens */
+    .navbar-auth .nav-item .nav-link span,
+    .navbar-auth .nav-item button.nav-link span {
+        display: none;
+    }
+
+    .link-icon {
+        font-size: 1.4rem;
+        /* Larger icons for better visibility on mobile */
+    }
+
+    .navbar-cart {
+        padding: 0.4rem;
+        /* Smaller padding for cart icon */
+    }
+
+    .cart-icon {
+        font-size: 1.4rem;
+        /* Smaller cart icon */
+    }
+
+    .cart-count {
+        width: 18px;
+        /* Smaller count badge */
+        height: 18px;
+        font-size: 0.65rem;
+        top: -6px;
+        right: -6px;
+    }
+
+    .dropdown-toggle {
+        padding: 0.4rem 0.8rem !important;
+        /* Smaller padding for dropdown button */
+    }
+}
+
+.orders-pill-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f8f9fa;
+    /* لون رمادي فاتح جداً */
+    padding: 6px 15px;
+    border-radius: 20px;
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 13px;
+    transition: 0.3s;
+}
+
+.orders-pill-btn:hover {
+    background: #e9ecef;
+    transform: translateY(-2px);
+}

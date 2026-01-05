@@ -1,0 +1,164 @@
+/* Container Styling */
+.wishlist-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-family: 'Poppins', sans-serif;
+    /* أو أي خط أنيق تستخدميه */
+}
+
+.wishlist-container h2 {
+    font-size: 2rem;
+    color: #2d3436;
+    margin-bottom: 30px;
+    border-bottom: 3px solid #ff4757;
+    display: inline-block;
+    padding-bottom: 10px;
+}
+
+/* Grid Layout */
+.wishlist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    padding: 20px 0;
+}
+
+/* Item Card Styling */
+.wishlist-item {
+    background: #ffffff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border: 1px solid #f0f0f0;
+}
+
+.wishlist-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+/* Image Wrapper */
+.wishlist-item img {
+    width: 100%;
+    height: 250px;
+    object-fit: contain;
+    /* لتجنب قص صورة المنتج */
+    background: #f9f9f9;
+    padding: 15px;
+    transition: transform 0.5s ease;
+}
+
+.wishlist-item:hover img {
+    transform: scale(1.05);
+}
+
+/* Item Content */
+.item-info {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    background: #fff;
+}
+
+.item-info h4 {
+    font-size: 1.1rem;
+    color: #2d3436;
+    margin-bottom: 10px;
+    height: 45px;
+    /* لتوحيد ارتفاع العناوين */
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.item-info .price {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #2ecc71;
+    margin-bottom: 20px;
+}
+
+/* Action Buttons */
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: auto;
+}
+
+.add-to-cart-btn {
+    background: #2d3436;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.add-to-cart-btn:hover {
+    background: #ff4757;
+    /* يتغير للون أحمر عند الوقوف عليه ليعطي حيوية */
+}
+
+.remove-btn {
+    background: #fff;
+    color: #ff4757;
+    border: 1px solid #ff4757;
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.remove-btn:hover {
+    background: #fff5f5;
+    text-decoration: none;
+    /* ألغينا الخط السفلي وجعلناه يبدو كزر حقيقي */
+}
+
+/* Empty State Styling */
+.empty-wishlist {
+    text-align: center;
+    padding: 80px 20px;
+    background: #f8f9fa;
+    border-radius: 20px;
+    border: 2px dashed #ddd;
+}
+
+.empty-wishlist p {
+    font-size: 1.3rem;
+    color: #636e72;
+    margin-bottom: 25px;
+}
+
+.empty-wishlist button {
+    background: #2d3436;
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.empty-wishlist button:hover {
+    transform: scale(1.05);
+}
