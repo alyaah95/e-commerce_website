@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router";
 import { useDispatch, useSelector } from 'react-redux';
 import { addProductToCartBackend } from '../store/slices/productCart';
 // import { increment } from '../store/slices/counter';
+import { removeFromWishlist } from "../store/slices/wishlistSlice"
 import WishlistButton from './WishlistButton';
 import "./productCard.css";
 import "./wishlistButton.css"
