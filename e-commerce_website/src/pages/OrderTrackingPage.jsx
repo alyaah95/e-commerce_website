@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllOrders, fetchOrderDetails } from '../store/slices/orderSlice';
-import './OrderTrackingPage.css';
+import './Ordertrackingpage.css';
 
 const CONTACT_INFO = {
     // phone: '+20 123 456 7890',
