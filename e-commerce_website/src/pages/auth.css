@@ -1,0 +1,446 @@
+/* ============================================================
+   auth.css  —  Shared Login & Register Styles
+   One file imported by both pages.
+   Fully consistent with site design system:
+   Same tokens as Checkout / Cart / Profile / Orders
+   Bootstrap 5 compatible — all classes prefixed .auth-*
+   ============================================================ */
+
+/* ── Variables ─────────────────────────────────────────────── */
+:root {
+    --auth-primary: #0d6efd;
+    --auth-primary-dark: #0a58ca;
+    --auth-primary-soft: #eff6ff;
+    --auth-success: #198754;
+    --auth-success-soft: #f0fdf4;
+    --auth-danger: #dc3545;
+    --auth-danger-soft: #fff5f5;
+
+    --auth-bg: #f4f6fb;
+    --auth-surface: #ffffff;
+    --auth-surface-2: #f8fafc;
+    --auth-border: #e8edf5;
+
+    --auth-text: #111827;
+    --auth-text-muted: #6b7280;
+    --auth-text-faint: #9ca3af;
+
+    --auth-radius-xl: 24px;
+    --auth-radius-lg: 16px;
+    --auth-radius: 12px;
+    --auth-radius-sm: 8px;
+
+    --auth-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+    --auth-shadow-card: 0 2px 12px rgba(0, 0, 0, 0.05);
+
+    --auth-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PAGE SHELL
+   Full-viewport centred layout — same #f4f6fb bg as every page
+═══════════════════════════════════════════════════════════════ */
+.auth-page {
+    background: var(--auth-bg);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   AUTH CARD
+═══════════════════════════════════════════════════════════════ */
+.auth-card {
+    background: var(--auth-surface);
+    border-radius: var(--auth-radius-xl);
+    box-shadow: var(--auth-shadow);
+    padding: 2.5rem 2.25rem;
+    width: 100%;
+    max-width: 440px;
+    animation: auth-card-in 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Wider card for Register (5 fields) */
+.auth-card--wide {
+    max-width: 640px;
+}
+
+@keyframes auth-card-in {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ── Brand mark ── */
+.auth-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1.75rem;
+}
+
+.auth-brand-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: var(--auth-primary-soft);
+    color: var(--auth-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.auth-brand-name {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--auth-text);
+    letter-spacing: -0.3px;
+}
+
+/* ── Heading ── */
+.auth-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--auth-text);
+    letter-spacing: -0.5px;
+    margin: 0 0 0.3rem;
+}
+
+.auth-subtitle {
+    font-size: 0.88rem;
+    color: var(--auth-text-muted);
+    margin: 0 0 1.5rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ALERT BANNER (server / submission errors)
+   Same pattern as Profile.css / CheckoutPage.css alerts
+═══════════════════════════════════════════════════════════════ */
+.auth-alert {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.8rem 1rem;
+    border-radius: var(--auth-radius);
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 1.25rem;
+    animation: auth-slide-in 0.22s ease-out;
+    line-height: 1.4;
+}
+
+@keyframes auth-slide-in {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.auth-alert--error {
+    background: var(--auth-danger-soft);
+    border: 1.5px solid #fecaca;
+    color: #7f1d1d;
+}
+
+.auth-alert--success {
+    background: var(--auth-success-soft);
+    border: 1.5px solid #bbf7d0;
+    color: #14532d;
+}
+
+.auth-alert svg {
+    flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FORM
+═══════════════════════════════════════════════════════════════ */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+/* Two-column field row (Name + Username, Password + Confirm) */
+.auth-field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+/* Single field block */
+.auth-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.38rem;
+}
+
+/* Label */
+.auth-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--auth-text);
+    letter-spacing: 0.1px;
+}
+
+/* Label row: label + forgot-password link on same line */
+.auth-label-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.auth-forgot-link {
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: var(--auth-primary);
+    text-decoration: none;
+    transition: var(--auth-transition);
+}
+
+.auth-forgot-link:hover {
+    color: var(--auth-primary-dark);
+    text-decoration: underline;
+}
+
+/* ── Input wrapper (icon left + optional eye right) ── */
+.auth-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.auth-input-icon {
+    position: absolute;
+    left: 0.85rem;
+    color: var(--auth-text-faint);
+    pointer-events: none;
+    flex-shrink: 0;
+    /* vertically centred by flex parent */
+}
+
+/* ── Input itself ── */
+.auth-input {
+    width: 100%;
+    padding: 0.65rem 0.9rem 0.65rem 2.4rem;
+    /* always leave room for left icon */
+    border: 1.5px solid var(--auth-border);
+    border-radius: var(--auth-radius-sm);
+    font-size: 0.9rem;
+    color: var(--auth-text);
+    background: var(--auth-surface);
+    transition: var(--auth-transition);
+    outline: none;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+.auth-input::placeholder {
+    color: var(--auth-text-faint);
+    font-size: 0.85rem;
+}
+
+.auth-input:hover:not(:disabled) {
+    border-color: #c7d6f0;
+}
+
+.auth-input:focus {
+    border-color: var(--auth-primary);
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.12);
+    background: #fff;
+}
+
+/* Extra right padding for inputs that have the eye button */
+.auth-input--padded-r {
+    padding-right: 2.6rem;
+}
+
+/* Error state */
+.auth-input--error {
+    border-color: var(--auth-danger) !important;
+    background: var(--auth-danger-soft) !important;
+}
+
+.auth-input--error:focus {
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.12) !important;
+}
+
+/* ── Eye / show-password toggle button ── */
+.auth-eye-btn {
+    position: absolute;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--auth-text-faint);
+    display: flex;
+    align-items: center;
+    padding: 0;
+    transition: color 0.2s;
+}
+
+.auth-eye-btn:hover {
+    color: var(--auth-primary);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   INLINE FIELD ERROR
+   Identical style used in both Login and Register.
+   Small, icon-led, danger red — consistent with Profile.css
+═══════════════════════════════════════════════════════════════ */
+.auth-field-error {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--auth-danger);
+    animation: auth-slide-in 0.18s ease-out;
+    line-height: 1.3;
+}
+
+.auth-field-error svg {
+    flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SUBMIT BUTTON
+   Same primary pill pattern as Checkout / Cart CTA buttons
+═══════════════════════════════════════════════════════════════ */
+.auth-submit-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--auth-primary);
+    color: #fff;
+    border: none;
+    padding: 0.8rem 1rem;
+    border-radius: var(--auth-radius-lg);
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.2px;
+    transition: var(--auth-transition);
+    margin-top: 0.35rem;
+}
+
+.auth-submit-btn:hover:not(:disabled) {
+    background: var(--auth-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(13, 110, 253, 0.3);
+}
+
+.auth-submit-btn:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.auth-submit-btn:disabled {
+    background: #c7d2e7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.auth-submit-btn:focus-visible {
+    outline: 3px solid rgba(13, 110, 253, 0.4);
+    outline-offset: 2px;
+}
+
+/* Inline spinner inside submit button */
+.auth-btn-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2.5px solid rgba(255, 255, 255, 0.35);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: auth-spin 0.7s linear infinite;
+    flex-shrink: 0;
+}
+
+@keyframes auth-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FOOTER SWITCH LINK
+   "Don't have an account? Create one now" / "Already have one?"
+═══════════════════════════════════════════════════════════════ */
+.auth-switch {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--auth-text-muted);
+    margin: 0;
+}
+
+.auth-switch-link {
+    color: var(--auth-primary);
+    font-weight: 700;
+    text-decoration: none;
+    transition: var(--auth-transition);
+}
+
+.auth-switch-link:hover {
+    color: var(--auth-primary-dark);
+    text-decoration: underline;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   DIVIDER (optional — available for both pages)
+═══════════════════════════════════════════════════════════════ */
+.auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.75rem;
+    color: var(--auth-text-faint);
+    margin: 0.25rem 0;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: "";
+    flex: 1;
+    height: 1.5px;
+    background: var(--auth-border);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════════════════ */
+
+/* Collapse two-column field rows on narrow screens */
+@media (max-width: 520px) {
+
+    .auth-card,
+    .auth-card--wide {
+        padding: 2rem 1.25rem;
+        border-radius: var(--auth-radius-lg);
+    }
+
+    .auth-field-row {
+        grid-template-columns: 1fr;
+    }
+
+    .auth-title {
+        font-size: 1.35rem;
+    }
+}

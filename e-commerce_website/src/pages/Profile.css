@@ -1,0 +1,781 @@
+/* ============================================================
+   Profile.css  —  Premium Profile Page
+   Consistent with site design system:
+   Same tokens as Checkout / Cart / Orders / Wishlist
+   Bootstrap 5 compatible — no class conflicts
+   ============================================================ */
+
+/* ── Variables — identical to every other page on the site ─── */
+:root {
+    --prf-primary: #0d6efd;
+    --prf-primary-dark: #0a58ca;
+    --prf-primary-soft: #eff6ff;
+    --prf-success: #198754;
+    --prf-success-soft: #f0fdf4;
+    --prf-danger: #dc3545;
+    --prf-danger-soft: #fff5f5;
+    --prf-warning: #f97316;
+
+    --prf-bg: #f4f6fb;
+    --prf-surface: #ffffff;
+    --prf-surface-2: #f8fafc;
+    --prf-border: #e8edf5;
+
+    --prf-text: #111827;
+    --prf-text-muted: #6b7280;
+    --prf-text-faint: #9ca3af;
+
+    --prf-radius-xl: 24px;
+    --prf-radius-lg: 16px;
+    --prf-radius: 12px;
+    --prf-radius-sm: 8px;
+
+    --prf-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    --prf-shadow-hover: 0 16px 48px rgba(0, 0, 0, 0.11);
+    --prf-shadow-card: 0 2px 12px rgba(0, 0, 0, 0.05);
+
+    --prf-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Page shell ──────────────────────────────────────────────── */
+.prf-page {
+    background: var(--prf-bg);
+    min-height: 100vh;
+    padding: 2.5rem 1rem 6rem;
+}
+
+.prf-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PAGE HEADER
+═══════════════════════════════════════════════════════════════ */
+.prf-page-header {
+    margin-bottom: 2rem;
+}
+
+.prf-page-title {
+    font-size: clamp(1.75rem, 4vw, 2.4rem);
+    font-weight: 800;
+    color: var(--prf-text);
+    letter-spacing: -0.6px;
+    margin: 0 0 0.25rem;
+}
+
+.prf-page-sub {
+    font-size: 0.95rem;
+    color: var(--prf-text-muted);
+    margin: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LOADING / ERROR STATES
+═══════════════════════════════════════════════════════════════ */
+.prf-fullscreen-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    background: var(--prf-bg);
+    gap: 1rem;
+}
+
+.prf-loading-text {
+    color: var(--prf-text-muted);
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.prf-spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid var(--prf-border);
+    border-top-color: var(--prf-primary);
+    border-radius: 50%;
+    animation: prf-spin 0.75s linear infinite;
+}
+
+@keyframes prf-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.prf-error-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--prf-danger-soft);
+    border: 1.5px solid #fecaca;
+    border-radius: var(--prf-radius-lg);
+    padding: 2.5rem 3rem;
+    text-align: center;
+    color: var(--prf-danger);
+}
+
+.prf-error-card h5 {
+    font-weight: 700;
+    margin: 0;
+    color: var(--prf-text);
+}
+
+.prf-error-card p {
+    margin: 0;
+    font-size: 0.9rem;
+    opacity: 0.85;
+}
+
+.prf-error-icon {
+    display: flex;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MAIN LAYOUT — sidebar + content
+═══════════════════════════════════════════════════════════════ */
+.prf-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 1.25rem;
+    align-items: start;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   AVATAR SIDEBAR
+═══════════════════════════════════════════════════════════════ */
+.prf-sidebar {
+    position: sticky;
+    top: 1.5rem;
+}
+
+.prf-avatar-card {
+    background: var(--prf-surface);
+    border-radius: var(--prf-radius-xl);
+    box-shadow: var(--prf-shadow-card);
+    padding: 1.75rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0;
+}
+
+/* Avatar circle with initials */
+.prf-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--prf-primary) 0%, #6366f1 100%);
+    color: #fff;
+    font-size: 1.75rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 16px rgba(13, 110, 253, 0.28);
+    letter-spacing: -0.5px;
+    user-select: none;
+}
+
+.prf-avatar-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--prf-text);
+    margin-bottom: 0.25rem;
+    display: block;
+}
+
+.prf-avatar-email {
+    font-size: 0.78rem;
+    color: var(--prf-text-muted);
+    word-break: break-all;
+    display: block;
+}
+
+.prf-avatar-divider {
+    width: 100%;
+    height: 1.5px;
+    background: var(--prf-border);
+    margin: 1.1rem 0;
+}
+
+.prf-avatar-meta {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.prf-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+    color: var(--prf-text-muted);
+    justify-content: center;
+}
+
+/* Edit button in sidebar */
+.prf-edit-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    background: var(--prf-primary-soft);
+    color: var(--prf-primary);
+    border: 1.5px solid #bfdbfe;
+    padding: 0.55rem 1rem;
+    border-radius: var(--prf-radius-sm);
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--prf-transition);
+    letter-spacing: 0.2px;
+}
+
+.prf-edit-btn:hover {
+    background: var(--prf-primary);
+    color: #fff;
+    border-color: var(--prf-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 14px rgba(13, 110, 253, 0.28);
+}
+
+.prf-edit-btn:active {
+    transform: translateY(0);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ALERT BANNERS
+═══════════════════════════════════════════════════════════════ */
+.prf-alert {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem 1.1rem;
+    border-radius: var(--prf-radius);
+    font-size: 0.88rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    animation: prf-slide-in 0.25s ease-out;
+}
+
+@keyframes prf-slide-in {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.prf-alert--error {
+    background: var(--prf-danger-soft);
+    border: 1.5px solid #fecaca;
+    color: #7f1d1d;
+}
+
+.prf-alert--success {
+    background: var(--prf-success-soft);
+    border: 1.5px solid #bbf7d0;
+    color: #14532d;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CONTENT PANELS
+═══════════════════════════════════════════════════════════════ */
+.prf-main {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.prf-panel {
+    background: var(--prf-surface);
+    border-radius: var(--prf-radius-xl);
+    box-shadow: var(--prf-shadow-card);
+    overflow: hidden;
+    transition: var(--prf-transition);
+    animation: prf-panel-in 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes prf-panel-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.prf-panel:focus-within {
+    box-shadow: var(--prf-shadow);
+}
+
+/* Panel header strip — same as Checkout page */
+.prf-panel-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.1rem 1.5rem;
+    background: var(--prf-surface-2);
+    border-bottom: 1.5px solid var(--prf-border);
+}
+
+.prf-panel-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.prf-panel-icon--info {
+    background: #eff6ff;
+    color: var(--prf-primary);
+}
+
+.prf-panel-icon--lock {
+    background: #fff7ed;
+    color: var(--prf-warning);
+}
+
+.prf-panel-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--prf-text);
+    margin: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   READ-ONLY INFO ROWS
+═══════════════════════════════════════════════════════════════ */
+.prf-info-rows {
+    display: flex;
+    flex-direction: column;
+}
+
+.prf-info-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    border-bottom: 1.5px solid var(--prf-border);
+    gap: 1rem;
+    transition: background 0.18s;
+}
+
+.prf-info-row:hover {
+    background: #fafbff;
+}
+
+.prf-info-row--last {
+    border-bottom: none;
+}
+
+.prf-info-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--prf-text-faint);
+    white-space: nowrap;
+}
+
+.prf-info-value {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--prf-text);
+    text-align: right;
+    word-break: break-all;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   EDIT MODE — FORM FIELDS
+   Same patterns as CheckoutPage inputs
+═══════════════════════════════════════════════════════════════ */
+.prf-fields {
+    padding: 1.4rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+}
+
+.prf-field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.prf-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.prf-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--prf-text);
+    letter-spacing: 0.1px;
+}
+
+.prf-label-hint {
+    font-weight: 400;
+    color: var(--prf-text-faint);
+    font-size: 0.75rem;
+}
+
+.prf-input {
+    width: 100%;
+    padding: 0.65rem 0.9rem;
+    border: 1.5px solid var(--prf-border);
+    border-radius: var(--prf-radius-sm);
+    font-size: 0.9rem;
+    color: var(--prf-text);
+    background: var(--prf-surface);
+    transition: var(--prf-transition);
+    outline: none;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+.prf-input::placeholder {
+    color: var(--prf-text-faint);
+    font-size: 0.85rem;
+}
+
+.prf-input:hover:not(:disabled) {
+    border-color: #c7d6f0;
+}
+
+.prf-input:focus {
+    border-color: var(--prf-primary);
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.12);
+    background: #fff;
+}
+
+.prf-input:disabled {
+    background: var(--prf-surface-2);
+    color: var(--prf-text-muted);
+    cursor: not-allowed;
+}
+
+/* Error state */
+.prf-input--error {
+    border-color: var(--prf-danger);
+    background: var(--prf-danger-soft);
+}
+
+.prf-input--error:focus {
+    border-color: var(--prf-danger);
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.12);
+}
+
+.prf-field-error {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--prf-danger);
+    margin-top: 0.1rem;
+}
+
+/* Form action buttons row */
+.prf-form-actions {
+    display: flex;
+    gap: 0.75rem;
+    padding-top: 0.5rem;
+    flex-wrap: wrap;
+}
+
+/* ── Button system ── */
+.prf-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 0.6rem 1.35rem;
+    border-radius: var(--prf-radius-sm);
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--prf-transition);
+    letter-spacing: 0.2px;
+    border: 1.5px solid transparent;
+    white-space: nowrap;
+}
+
+/* Primary — Save Changes */
+.prf-btn--primary {
+    background: var(--prf-primary);
+    color: #fff;
+    border-color: var(--prf-primary);
+}
+
+.prf-btn--primary:hover:not(:disabled) {
+    background: var(--prf-primary-dark);
+    border-color: var(--prf-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(13, 110, 253, 0.28);
+}
+
+.prf-btn--primary:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.prf-btn--primary:disabled {
+    background: #c7d2e7;
+    border-color: #c7d2e7;
+    cursor: not-allowed;
+}
+
+/* Ghost — Cancel */
+.prf-btn--ghost {
+    background: transparent;
+    color: var(--prf-text-muted);
+    border-color: var(--prf-border);
+}
+
+.prf-btn--ghost:hover {
+    background: var(--prf-surface-2);
+    color: var(--prf-text);
+    border-color: #c7d6f0;
+    transform: translateY(-1px);
+}
+
+/* Inline spinner inside button */
+.prf-btn-spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: prf-spin 0.7s linear infinite;
+    flex-shrink: 0;
+}
+
+/* ── Focus visible — accessibility ── */
+.prf-btn:focus-visible,
+.prf-input:focus-visible,
+.prf-edit-btn:focus-visible {
+    outline: 3px solid rgba(13, 110, 253, 0.4);
+    outline-offset: 2px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════════════════ */
+
+/* Tablet — sidebar moves above content */
+@media (max-width: 768px) {
+    .prf-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .prf-sidebar {
+        position: static;
+    }
+
+    .prf-avatar-card {
+        flex-direction: row;
+        text-align: left;
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding: 1.25rem;
+        align-items: center;
+    }
+
+    .prf-avatar {
+        width: 56px;
+        height: 56px;
+        font-size: 1.35rem;
+        margin-bottom: 0;
+        flex-shrink: 0;
+    }
+
+    .prf-avatar-card>*:not(.prf-avatar):not(.prf-avatar-divider):not(.prf-edit-btn) {
+        flex: 1;
+        min-width: 120px;
+    }
+
+    .prf-avatar-divider {
+        display: none;
+    }
+
+    .prf-avatar-meta {
+        margin-bottom: 0;
+    }
+
+    .prf-edit-btn {
+        width: auto;
+        padding: 0.48rem 1rem;
+        margin-left: auto;
+    }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .prf-page {
+        padding: 1.5rem 0.75rem 5rem;
+    }
+
+    .prf-page-title {
+        font-size: 1.5rem;
+    }
+
+    .prf-field-row {
+        grid-template-columns: 1fr;
+    }
+
+    .prf-panel-header {
+        padding: 0.9rem 1.1rem;
+    }
+
+    .prf-fields {
+        padding: 1.1rem;
+        gap: 0.9rem;
+    }
+
+    .prf-info-row {
+        padding: 0.85rem 1.1rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+
+    .prf-info-value {
+        text-align: left;
+    }
+
+    .prf-form-actions {
+        flex-direction: column;
+    }
+
+    .prf-btn {
+        width: 100%;
+    }
+
+    .prf-avatar-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .prf-edit-btn {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .prf-avatar-divider {
+        display: block;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   WARNING BUTTON VARIANT  (ChangePasswordForm submit)
+   Orange-toned to signal a sensitive/destructive action
+═══════════════════════════════════════════════════════════════ */
+.prf-btn--warning {
+    background: #fff7ed;
+    color: #c2410c;
+    border-color: #fed7aa;
+}
+
+.prf-btn--warning:hover:not(:disabled) {
+    background: #f97316;
+    color: #fff;
+    border-color: #f97316;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(249, 115, 22, 0.28);
+}
+
+.prf-btn--warning:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.prf-btn--warning:disabled {
+    background: var(--prf-surface-2);
+    color: var(--prf-text-faint);
+    border-color: var(--prf-border);
+    cursor: not-allowed;
+}
+
+/* Dark spinner variant — for use on light-background buttons */
+.prf-btn-spinner--dark {
+    border-color: rgba(0, 0, 0, 0.15);
+    border-top-color: #c2410c;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CHANGE PASSWORD FORM  (.cpf-*)
+   Input wrapper + icon + eye-toggle, scoped to this component.
+   Reuses all .prf-field / .prf-label / .prf-input classes.
+═══════════════════════════════════════════════════════════════ */
+.cpf-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+}
+
+/* Wrapper that positions the left icon + right eye-btn */
+.cpf-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* Leading lock icon — absolute left */
+.cpf-input-icon {
+    position: absolute;
+    left: 0.85rem;
+    color: var(--prf-text-faint);
+    pointer-events: none;
+    flex-shrink: 0;
+}
+
+/* Extra horizontal padding on the input itself */
+.cpf-input--has-icons {
+    padding-left: 2.4rem;
+    /* room for left icon  */
+    padding-right: 2.6rem;
+    /* room for right eye  */
+}
+
+/* Eye / show-password toggle — absolute right */
+.cpf-eye-btn {
+    position: absolute;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--prf-text-faint);
+    display: flex;
+    align-items: center;
+    padding: 0;
+    transition: color 0.2s;
+    line-height: 0;
+}
+
+.cpf-eye-btn:hover {
+    color: var(--prf-primary);
+}

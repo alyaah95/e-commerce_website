@@ -8,11 +8,11 @@ import { useContext } from "react";
 import LanguageContext from "../context/context";
 import { Dropdown, DropdownButton } from 'react-bootstrap';
 import { logoutUser } from '../store/slices/authSlice';
-// import { reset as resetCounter } from '../store/slices/counter'; 
+
 
 
 const Navbar = () => {
-  // const counterVal = useSelector((state) => state.counter.counterValue);
+
   const products = useSelector((state) => state.productCart.products);
   const totalItems = products.reduce((total, item) => total + item.quantity, 0);
   const wishlistCount = useSelector(state => state.wishlist.items.length);
@@ -33,7 +33,7 @@ const Navbar = () => {
   const handleLogout = async () => {
    
     await dispatch(logoutUser());
-    dispatch(resetCounter()); 
+  
     
     
     navigate('/login'); 

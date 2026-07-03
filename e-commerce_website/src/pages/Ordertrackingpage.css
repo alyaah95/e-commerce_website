@@ -1,0 +1,1563 @@
+/* ============================================================
+   OrderTrackingPage.css  —  Premium E-Commerce Redesign
+   Consistent with site palette (Bootstrap 5 + custom)
+   ============================================================ */
+
+/* ── Variables ─────────────────────────────────────────────── */
+:root {
+    --otp-primary: #0d6efd;
+    --otp-primary-dark: #0a58ca;
+    --otp-primary-soft: #eff6ff;
+    --otp-success: #198754;
+    --otp-success-soft: #f0fdf4;
+    --otp-danger: #dc3545;
+    --otp-danger-soft: #fff5f5;
+    --otp-warning: #f97316;
+    --otp-warning-soft: #fff7ed;
+
+    --otp-bg: #f4f6fb;
+    --otp-surface: #ffffff;
+    --otp-surface-2: #f8fafc;
+    --otp-border: #e8edf5;
+
+    --otp-text: #111827;
+    --otp-text-2: #374151;
+    --otp-text-muted: #6b7280;
+    --otp-text-faint: #9ca3af;
+
+    --otp-radius-xl: 24px;
+    --otp-radius-lg: 16px;
+    --otp-radius: 12px;
+    --otp-radius-sm: 8px;
+
+    --otp-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    --otp-shadow-hover: 0 16px 48px rgba(0, 0, 0, 0.11);
+    --otp-shadow-card: 0 2px 12px rgba(0, 0, 0, 0.05);
+
+    --otp-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Page Shell ──────────────────────────────────────────────── */
+.otp-page {
+    background: var(--otp-bg);
+    min-height: 100vh;
+    padding: 2.5rem 1rem 6rem;
+}
+
+.otp-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   HERO + STAT CARDS
+═══════════════════════════════════════════════════════════════ */
+.otp-hero {
+    margin-bottom: 2.5rem;
+}
+
+.otp-hero-text {
+    text-align: center;
+    margin-bottom: 1.75rem;
+}
+
+.otp-hero-title {
+    font-size: clamp(1.75rem, 4vw, 2.4rem);
+    font-weight: 800;
+    color: var(--otp-text);
+    letter-spacing: -0.6px;
+    margin-bottom: 0.3rem;
+}
+
+.otp-hero-sub {
+    color: var(--otp-text-muted);
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* ── Stat Cards Row ── */
+.otp-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.otp-stat-card {
+    background: var(--otp-surface);
+    border-radius: var(--otp-radius-lg);
+    box-shadow: var(--otp-shadow-card);
+    padding: 1.1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    transition: var(--otp-transition);
+}
+
+.otp-stat-card:hover {
+    box-shadow: var(--otp-shadow);
+    transform: translateY(-3px);
+}
+
+.otp-stat-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.otp-stat-icon--total {
+    background: #eff6ff;
+    color: var(--otp-primary);
+}
+
+.otp-stat-icon--progress {
+    background: #fff7ed;
+    color: var(--otp-warning);
+}
+
+.otp-stat-icon--done {
+    background: #f0fdf4;
+    color: var(--otp-success);
+}
+
+.otp-stat-card>div:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.otp-stat-value {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--otp-text);
+    line-height: 1;
+    letter-spacing: -0.5px;
+}
+
+.otp-stat-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--otp-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LOADING / ERROR STATES
+═══════════════════════════════════════════════════════════════ */
+.otp-fullscreen-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    gap: 1rem;
+}
+
+.otp-loading-text {
+    color: var(--otp-text-muted);
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.otp-error-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--otp-danger-soft);
+    border: 1.5px solid #fecaca;
+    border-radius: var(--otp-radius-lg);
+    padding: 2.5rem 3rem;
+    text-align: center;
+    color: var(--otp-danger);
+}
+
+.otp-error-card h5 {
+    font-weight: 700;
+    margin: 0;
+}
+
+.otp-error-card p {
+    margin: 0;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.otp-spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid var(--otp-border);
+    border-top-color: var(--otp-primary);
+    border-radius: 50%;
+    animation: otp-spin 0.75s linear infinite;
+}
+
+.otp-spinner--sm {
+    width: 18px;
+    height: 18px;
+    border-width: 2.5px;
+}
+
+@keyframes otp-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   EMPTY STATE
+═══════════════════════════════════════════════════════════════ */
+.otp-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5rem 2rem;
+    background: var(--otp-surface);
+    border-radius: var(--otp-radius-xl);
+    box-shadow: var(--otp-shadow-card);
+    text-align: center;
+    color: var(--otp-text-muted);
+}
+
+.otp-empty-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--otp-surface-2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    color: var(--otp-text-faint);
+}
+
+.otp-empty-state h5 {
+    font-weight: 700;
+    color: var(--otp-text);
+    margin-bottom: 0.35rem;
+    font-size: 1.1rem;
+}
+
+.otp-empty-state p {
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ORDER LIST
+═══════════════════════════════════════════════════════════════ */
+.otp-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ORDER CARD
+═══════════════════════════════════════════════════════════════ */
+.otp-card {
+    background: var(--otp-surface);
+    border-radius: var(--otp-radius-xl);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    transition: var(--otp-transition);
+    border: 1.5px solid transparent;
+}
+
+.otp-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--otp-shadow-hover);
+}
+
+.otp-card--open {
+    border-color: var(--otp-primary);
+    box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.08), var(--otp-shadow-hover);
+    transform: translateY(-4px);
+}
+
+/* ── Card Summary Row ── */
+.otp-card-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1.25rem 1.5rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    gap: 1.5rem;
+    transition: background 0.2s;
+}
+
+.otp-card-summary:hover {
+    background: #fafbff;
+}
+
+/* LEFT side */
+.otp-card-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+    min-width: 0;
+}
+
+/* Thumbnail */
+.otp-thumb-wrap {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    border-radius: var(--otp-radius);
+    overflow: hidden;
+    flex-shrink: 0;
+    background: var(--otp-surface-2);
+    border: 1px solid var(--otp-border);
+}
+
+.otp-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 4px;
+}
+
+.otp-thumb-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--otp-text-faint);
+}
+
+.otp-thumb-more {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.42);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--otp-radius);
+}
+
+/* Card Info */
+.otp-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+}
+
+.otp-order-id {
+    font-size: 0.75rem;
+    color: var(--otp-text-muted);
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+.otp-order-date {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--otp-text);
+}
+
+.otp-item-count {
+    font-size: 0.75rem;
+    color: var(--otp-text-faint);
+}
+
+/* RIGHT side */
+.otp-card-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-shrink: 0;
+}
+
+/* Hero price */
+.otp-price {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--otp-primary-dark);
+    letter-spacing: -0.5px;
+    white-space: nowrap;
+}
+
+/* Status badge */
+.otp-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+}
+
+.otp-status-icon {
+    display: flex;
+    align-items: center;
+}
+
+/* Chevron */
+.otp-chevron {
+    color: var(--otp-text-faint);
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.otp-chevron--up {
+    transform: rotate(180deg);
+    color: var(--otp-primary);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CARD BODY (expanded details)
+═══════════════════════════════════════════════════════════════ */
+.otp-card-body {
+    border-top: 1.5px solid var(--otp-border);
+    animation: otp-reveal 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes otp-reveal {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.otp-details-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 2rem;
+    color: var(--otp-text-muted);
+    font-size: 0.88rem;
+}
+
+/* ── Details inner wrapper ── */
+.otp-details {
+    padding: 1.75rem 1.5rem;
+    background: var(--otp-surface-2);
+}
+
+/* Eyebrow label */
+.otp-eyebrow {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--otp-text-faint);
+    margin-bottom: 0.85rem;
+    display: block;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   VERTICAL STEPPER
+═══════════════════════════════════════════════════════════════ */
+.otp-stepper-wrap {
+    background: var(--otp-surface);
+    border-radius: var(--otp-radius-lg);
+    padding: 1.4rem 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--otp-shadow-card);
+}
+
+.otp-stepper {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.otp-stepper-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    position: relative;
+    padding-bottom: 1.4rem;
+}
+
+.otp-stepper-step:last-child {
+    padding-bottom: 0;
+}
+
+/* Vertical connector line */
+.otp-stepper-line {
+    position: absolute;
+    left: 17px;
+    top: 36px;
+    width: 2px;
+    bottom: 0;
+    background: var(--otp-border);
+    border-radius: 2px;
+    transition: background 0.4s ease;
+}
+
+.otp-stepper-line.filled {
+    background: linear-gradient(180deg, var(--otp-success) 0%, #34d399 100%);
+}
+
+/* Step dot */
+.otp-stepper-dot {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2.5px solid var(--otp-border);
+    background: var(--otp-surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    color: var(--otp-text-faint);
+    transition: var(--otp-transition);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.otp-stepper-step.done .otp-stepper-dot {
+    border-color: var(--otp-success);
+    background: var(--otp-success);
+    color: #fff;
+}
+
+.otp-stepper-step.active .otp-stepper-dot {
+    border-color: var(--otp-primary);
+    background: var(--otp-primary);
+    color: #fff;
+    box-shadow: 0 0 0 5px rgba(13, 110, 253, 0.15);
+}
+
+.otp-stepper-step.future .otp-stepper-dot {
+    opacity: 0.4;
+}
+
+/* Pulse animation for active step */
+.otp-pulse {
+    position: absolute;
+    inset: -5px;
+    border-radius: 50%;
+    border: 2px solid var(--otp-primary);
+    animation: otp-pulse 1.8s ease-out infinite;
+}
+
+@keyframes otp-pulse {
+    0% {
+        opacity: 0.8;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.7);
+    }
+}
+
+/* Delivered — green pulse */
+.otp-stepper-step.done:last-child .otp-pulse {
+    border-color: var(--otp-success);
+    animation: otp-pulse-green 2s ease-out infinite;
+}
+
+@keyframes otp-pulse-green {
+    0% {
+        opacity: 0.7;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.8);
+    }
+}
+
+/* Step text */
+.otp-stepper-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding-top: 0.45rem;
+}
+
+.otp-stepper-label {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--otp-text);
+    line-height: 1;
+}
+
+.otp-stepper-step.future .otp-stepper-label {
+    color: var(--otp-text-muted);
+    font-weight: 500;
+}
+
+.otp-stepper-sub {
+    font-size: 0.78rem;
+    color: var(--otp-text-muted);
+}
+
+.otp-stepper-step.done .otp-stepper-label {
+    color: var(--otp-success);
+}
+
+.otp-stepper-step.active .otp-stepper-label {
+    color: var(--otp-primary);
+}
+
+/* ── Alert (Cancelled / Returned) ── */
+.otp-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+    padding: 1rem 1.25rem;
+    background: var(--otp-danger-soft);
+    border: 1.5px solid #fecaca;
+    border-radius: var(--otp-radius);
+    color: #7f1d1d;
+    font-size: 0.88rem;
+    margin-bottom: 1.5rem;
+}
+
+.otp-alert-icon {
+    width: 36px;
+    height: 36px;
+    background: #fee2e2;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--otp-danger);
+}
+
+.otp-alert strong {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+}
+
+.otp-alert p {
+    margin: 0;
+    color: #991b1b;
+    font-size: 0.82rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BODY GRID: Products + Summary
+═══════════════════════════════════════════════════════════════ */
+.otp-body-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+}
+
+/* ── Mini Product List ── */
+.otp-products-col {
+    min-width: 0;
+}
+
+.otp-product-list {
+    display: flex;
+    flex-direction: column;
+    background: var(--otp-surface);
+    border-radius: var(--otp-radius-lg);
+    overflow: hidden;
+    box-shadow: var(--otp-shadow-card);
+}
+
+.otp-product-row {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--otp-border);
+    transition: background 0.18s;
+}
+
+.otp-product-row:last-child {
+    border-bottom: none;
+}
+
+.otp-product-row:hover {
+    background: #fafbff;
+}
+
+/* Product thumbnail */
+.otp-product-img-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--otp-radius-sm);
+    background: var(--otp-surface-2);
+    border: 1px solid var(--otp-border);
+    overflow: hidden;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.otp-product-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 4px;
+}
+
+.otp-product-img-placeholder {
+    color: var(--otp-text-faint);
+}
+
+.otp-product-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.18rem;
+}
+
+.otp-product-name {
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: var(--otp-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.otp-product-qty {
+    font-size: 0.75rem;
+    color: var(--otp-text-muted);
+}
+
+.otp-product-price {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--otp-primary-dark);
+    white-space: nowrap;
+}
+
+/* ── Summary Column ── */
+.otp-summary-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Address card */
+.otp-address-card {
+    background: var(--otp-surface);
+    border-radius: var(--otp-radius-lg);
+    padding: 1rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    font-size: 0.85rem;
+    box-shadow: var(--otp-shadow-card);
+    color: var(--otp-text-muted);
+}
+
+.otp-address-header {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--otp-text-faint);
+    margin-bottom: 0.35rem;
+}
+
+.otp-address-card strong {
+    font-size: 0.9rem;
+    color: var(--otp-text);
+    font-weight: 700;
+}
+
+/* Receipt */
+.otp-receipt {
+    background: var(--otp-surface);
+    border-radius: var(--otp-radius-lg);
+    overflow: hidden;
+    box-shadow: var(--otp-shadow-card);
+}
+
+.otp-receipt-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.7rem 1.1rem;
+    font-size: 0.86rem;
+    color: var(--otp-text-muted);
+    border-bottom: 1px solid var(--otp-border);
+}
+
+.otp-receipt-row:last-child {
+    border-bottom: none;
+}
+
+.otp-receipt-row--ship {
+    color: var(--otp-success);
+    font-size: 0.83rem;
+}
+
+.otp-receipt-row--ship span:first-child {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.otp-receipt-divider {
+    height: 2px;
+    background: var(--otp-border);
+    margin: 0;
+}
+
+.otp-receipt-row--total {
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--otp-text);
+    background: var(--otp-surface-2);
+}
+
+/* ── Action Buttons ── */
+.otp-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.otp-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 0.6rem 1rem;
+    border-radius: var(--otp-radius-sm);
+    font-size: 0.84rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--otp-transition);
+    letter-spacing: 0.2px;
+    border: none;
+}
+
+/* Download Invoice */
+.otp-btn--invoice {
+    background: var(--otp-primary-soft);
+    color: var(--otp-primary);
+    border: 1.5px solid #bfdbfe;
+}
+
+.otp-btn--invoice:hover {
+    background: var(--otp-primary);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(13, 110, 253, 0.28);
+}
+
+/* Buy Again */
+.otp-btn--reorder {
+    background: var(--otp-success-soft);
+    color: var(--otp-success);
+    border: 1.5px solid #bbf7d0;
+}
+
+.otp-btn--reorder:hover {
+    background: var(--otp-success);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(25, 135, 84, 0.28);
+}
+
+/* Cancel / Return */
+.otp-btn--cancel {
+    background: transparent;
+    color: var(--otp-danger);
+    border: 1.5px solid #fecaca;
+}
+
+.otp-btn--cancel:hover {
+    background: var(--otp-danger);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(220, 53, 69, 0.25);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   HELP BAR
+═══════════════════════════════════════════════════════════════ */
+.otp-help-bar {
+    margin-top: 2.5rem;
+}
+
+.otp-help-inner {
+    background: var(--otp-surface);
+    border-radius: var(--otp-radius-lg);
+    padding: 1.1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    box-shadow: var(--otp-shadow-card);
+    flex-wrap: wrap;
+}
+
+.otp-help-text {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--otp-text-muted);
+}
+
+.otp-help-actions {
+    display: flex;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+}
+
+.otp-help-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 0.48rem 1.1rem;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: var(--otp-transition);
+    white-space: nowrap;
+}
+
+.otp-help-btn--phone {
+    background: var(--otp-primary-soft);
+    color: var(--otp-primary);
+    border: 1.5px solid #bfdbfe;
+}
+
+.otp-help-btn--phone:hover {
+    background: var(--otp-primary);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.25);
+}
+
+.otp-help-btn--whatsapp {
+    background: #f0fdf4;
+    color: #16a34a;
+    border: 1.5px solid #bbf7d0;
+}
+
+.otp-help-btn--whatsapp:hover {
+    background: #16a34a;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════════════════ */
+
+/* Tablet */
+@media (max-width: 768px) {
+    .otp-stats {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.65rem;
+    }
+
+    .otp-stat-card {
+        padding: 0.9rem 0.9rem;
+        gap: 0.65rem;
+    }
+
+    .otp-stat-value {
+        font-size: 1.3rem;
+    }
+
+    .otp-stat-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+    }
+
+    .otp-body-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .otp-card-summary {
+        padding: 1rem 1.15rem;
+        gap: 1rem;
+    }
+
+    .otp-thumb-wrap {
+        width: 54px;
+        height: 54px;
+    }
+
+    .otp-price {
+        font-size: 1.15rem;
+    }
+}
+
+/* Mobile */
+@media (max-width: 540px) {
+    .otp-page {
+        padding: 1.5rem 0.75rem 5rem;
+    }
+
+    .otp-hero-title {
+        font-size: 1.5rem;
+    }
+
+    .otp-stats {
+        gap: 0.5rem;
+    }
+
+    .otp-stat-card {
+        padding: 0.75rem;
+        gap: 0.5rem;
+    }
+
+    .otp-stat-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+    }
+
+    .otp-stat-value {
+        font-size: 1.1rem;
+    }
+
+    .otp-stat-label {
+        font-size: 0.65rem;
+    }
+
+    /* Stack card header vertically on very small screens */
+    .otp-card-summary {
+        flex-wrap: wrap;
+        padding: 1rem;
+    }
+
+    .otp-card-left {
+        width: 100%;
+    }
+
+    .otp-card-right {
+        width: 100%;
+        justify-content: space-between;
+        padding-top: 0.65rem;
+        border-top: 1px solid var(--otp-border);
+    }
+
+    .otp-status-badge {
+        font-size: 0.72rem;
+    }
+
+    .otp-price {
+        font-size: 1.2rem;
+    }
+
+    .otp-details {
+        padding: 1.25rem 1rem;
+    }
+
+    .otp-stepper-wrap {
+        padding: 1rem;
+    }
+
+    .otp-help-inner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .otp-help-actions {
+        width: 100%;
+    }
+
+    .otp-help-btn {
+        flex: 1;
+        justify-content: center;
+    }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   INVOICE MODAL
+   — Displayed in-page, no external windows
+   — @media print hides everything except .inv-printable
+═══════════════════════════════════════════════════════════════ */
+
+/* ── Backdrop ────────────────────────────────────────────────── */
+.inv-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 9999;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 2rem 1rem 4rem;
+    overflow-y: auto;
+    animation: inv-fade-in 0.2s ease;
+}
+
+@keyframes inv-fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* ── Modal shell ─────────────────────────────────────────────── */
+.inv-modal {
+    background: #fff;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 720px;
+    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.22);
+    overflow: hidden;
+    animation: inv-slide-up 0.28s cubic-bezier(0.34, 1.3, 0.64, 1);
+}
+
+@keyframes inv-slide-up {
+    from {
+        opacity: 0;
+        transform: translateY(28px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ── Toolbar (hidden on print) ───────────────────────────────── */
+.inv-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.9rem 1.4rem;
+    background: var(--otp-surface-2, #f8fafc);
+    border-bottom: 1.5px solid var(--otp-border, #e8edf5);
+    gap: 1rem;
+}
+
+.inv-toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--otp-text, #111827);
+}
+
+.inv-toolbar-icon {
+    width: 30px;
+    height: 30px;
+    background: var(--otp-primary-soft, #eff6ff);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--otp-primary, #0d6efd);
+    flex-shrink: 0;
+}
+
+.inv-toolbar-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.inv-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.42rem 1rem;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: all 0.22s ease;
+    white-space: nowrap;
+}
+
+.inv-btn--print {
+    background: var(--otp-primary, #0d6efd);
+    color: #fff;
+}
+
+.inv-btn--print:hover {
+    background: var(--otp-primary-dark, #0a58ca);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+}
+
+.inv-btn--close {
+    background: transparent;
+    color: var(--otp-text-muted, #6b7280);
+    border: 1.5px solid var(--otp-border, #e8edf5);
+}
+
+.inv-btn--close:hover {
+    background: #fef2f2;
+    color: var(--otp-danger, #dc3545);
+    border-color: #fecaca;
+    transform: translateY(-1px);
+}
+
+/* ── Printable receipt area ──────────────────────────────────── */
+.inv-printable {
+    padding: 2.5rem 2.75rem;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: #111;
+}
+
+/* Header */
+.inv-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 1.5rem;
+    border-bottom: 2.5px solid #111;
+    margin-bottom: 2rem;
+}
+
+.inv-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.inv-brand-name {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: #111;
+}
+
+.inv-brand-url {
+    font-size: 11px;
+    color: #999;
+}
+
+.inv-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 3px;
+}
+
+.inv-meta-title {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--otp-primary, #0d6efd);
+    letter-spacing: -0.4px;
+}
+
+.inv-meta-detail {
+    font-size: 12px;
+    color: #777;
+}
+
+/* Info columns */
+.inv-info-cols {
+    display: flex;
+    gap: 3rem;
+    margin-bottom: 2rem;
+}
+
+.inv-info-col {
+    flex: 1;
+}
+
+.inv-info-col--right {
+    text-align: right;
+}
+
+.inv-col-label {
+    display: block;
+    font-size: 9.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #bbb;
+    margin-bottom: 0.6rem;
+}
+
+.inv-address {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 13px;
+    color: #333;
+    line-height: 1.7;
+}
+
+.inv-address strong {
+    color: #111;
+    font-size: 14px;
+}
+
+.inv-muted {
+    color: #aaa;
+    font-size: 13px;
+}
+
+.inv-order-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.inv-info-row {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 13px;
+}
+
+.inv-info-row span:first-child {
+    color: #888;
+}
+
+.inv-info-row strong {
+    color: #111;
+}
+
+.inv-status-chip {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 10.5px;
+    font-weight: 700;
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+/* Table */
+.inv-table-wrap {
+    border: 1.5px solid #e9ecef;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 0;
+}
+
+.inv-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.inv-table thead tr {
+    background: #f8f9fa;
+}
+
+.inv-table th {
+    padding: 10px 14px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    color: #aaa;
+    border-bottom: 1.5px solid #e9ecef;
+    text-align: left;
+}
+
+.inv-table td {
+    padding: 11px 14px;
+    border-bottom: 1px solid #f3f4f6;
+    font-size: 13px;
+    color: #222;
+    vertical-align: middle;
+}
+
+.inv-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.inv-table tbody tr:hover {
+    background: #fafafa;
+}
+
+.inv-tc {
+    text-align: center !important;
+}
+
+.inv-tr {
+    text-align: right !important;
+}
+
+/* Totals */
+.inv-totals {
+    border: 1.5px solid #e9ecef;
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.inv-tot-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 9px 14px;
+    font-size: 13px;
+    color: #666;
+    border-bottom: 1px solid #f3f4f6;
+    background: #fff;
+}
+
+.inv-tot-row:last-child {
+    border-bottom: none;
+}
+
+.inv-tot-divider {
+    height: 1.5px;
+    background: #e9ecef;
+}
+
+.inv-tot-row--grand {
+    font-weight: 800;
+    font-size: 15px;
+    color: #111;
+    padding: 13px 14px;
+    background: #f8fafc;
+}
+
+/* Footer */
+.inv-footer {
+    text-align: center;
+    font-size: 11.5px;
+    color: #bbb;
+    padding-top: 1.5rem;
+    border-top: 1px dashed #e0e0e0;
+}
+
+/* ── @media print ─────────────────────────────────────────────
+   The InvoiceModal renders via ReactDOM.createPortal directly
+   into document.body, so it is NEVER inside a stacking context
+   that could interfere with these rules.
+
+   Strategy:
+     1. Hide everything on the page with visibility:hidden.
+     2. Restore visibility ONLY on the portal chain:
+        body > .inv-backdrop > .inv-modal > .inv-printable
+     3. Reset position/size on backdrop + modal so the receipt
+        fills the paper edge-to-edge with no scroll/clip issues.
+     4. Hide the modal toolbar (Print / Close buttons).
+──────────────────────────────────────────────────────────── */
+@media print {
+
+    /* ── Page margins ─────────────────────────────────────────── */
+    @page {
+        margin: 0.4in;
+    }
+
+    /* ── Step 1: hide the entire page tree.
+     Using `body *` (specificity 0-0-1 + 0-1-0 = 0-1-1).
+     We must BEAT this with every rescue rule below.          ── */
+    body * {
+        visibility: hidden !important;
+    }
+
+    /* ── Step 2: hide & collapse EVERY direct child of body
+     EXCEPT the portal backdrop. This removes the page layout
+     from the print canvas so nothing bleeds through behind
+     the invoice.
+     `body > *` specificity = 0-0-2 — beats `body *` (0-1-1).  */
+    body>*:not(.inv-backdrop) {
+        display: none !important;
+    }
+
+    /* ── Step 3: restore the backdrop itself to a full white page.
+     `body > .inv-backdrop` specificity = 0-1-2 — clearly wins. */
+    body>.inv-backdrop {
+        display: flex !important;
+        visibility: visible !important;
+        position: fixed !important;
+        inset: 0 !important;
+        background: #fff !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow: visible !important;
+        z-index: 99999 !important;
+        align-items: flex-start !important;
+        justify-content: center !important;
+    }
+
+    /* ── Step 4: restore visibility for every node inside the modal.
+     `body > .inv-backdrop *` specificity = 0-1-3 — wins cleanly. */
+    body>.inv-backdrop * {
+        visibility: visible !important;
+    }
+
+    /* ── Step 5: flatten the modal sheet ── */
+    body>.inv-backdrop .inv-modal {
+        position: static !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        max-height: none !important;
+        height: auto !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        overflow: visible !important;
+        animation: none !important;
+        transform: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    /* ── Step 6: hide toolbar (Print / Close buttons) ── */
+    body>.inv-backdrop .inv-toolbar,
+    body>.inv-backdrop .inv-no-print {
+        display: none !important;
+        visibility: hidden !important;
+    }
+
+    /* ── Step 7: paper-ready receipt padding ── */
+    body>.inv-backdrop .inv-printable {
+        padding: 36px 52px !important;
+        background: #fff !important;
+    }
+
+    /* ── Step 8: table print quality ── */
+    body>.inv-backdrop .inv-table tr {
+        page-break-inside: avoid;
+    }
+
+    body>.inv-backdrop .inv-table td,
+    body>.inv-backdrop .inv-table th {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+}

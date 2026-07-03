@@ -1,0 +1,239 @@
+/* ============================================================
+   ProductList.css — SaaS-grade UI polish
+   Works alongside Bootstrap 5 + React-Bootstrap 2.10
+   ============================================================ */
+
+/* ── CSS Variables ─────────────────────────────────────────── */
+:root {
+    --pl-primary: #0d6efd;
+    --pl-primary-dark: #0a58ca;
+    --pl-accent: #198754;
+    --pl-surface: #ffffff;
+    --pl-surface-muted: #f8f9fa;
+    --pl-border: #e9ecef;
+    --pl-text: #212529;
+    --pl-text-muted: #6c757d;
+    --pl-radius: 12px;
+    --pl-radius-lg: 16px;
+    --pl-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.07);
+    --pl-shadow-md: 0 6px 24px rgba(0, 0, 0, 0.10);
+    --pl-transition: all 0.3s ease-in-out;
+}
+
+/* ── Wrapper ────────────────────────────────────────────────── */
+.product-list-wrapper {
+    max-width: 1400px;
+}
+
+/* ── Page Header ─────────────────────────────────────────────── */
+.store-heading {
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    color: var(--pl-text);
+    letter-spacing: -0.5px;
+}
+
+.store-subheading {
+    font-size: 1rem;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+/* ── Guest Banner ────────────────────────────────────────────── */
+.guest-banner {
+    background: linear-gradient(135deg, #e7f0ff 0%, #f0fff4 100%);
+    border: 1px solid var(--pl-border);
+    border-radius: var(--pl-radius-lg);
+    transition: var(--pl-transition);
+}
+
+.guest-banner:hover {
+    box-shadow: var(--pl-shadow-md) !important;
+    transform: translateY(-2px);
+}
+
+.banner-btn {
+    border-radius: 8px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    transition: var(--pl-transition);
+}
+
+.banner-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.25);
+}
+
+/* ── Filter Bar ──────────────────────────────────────────────── */
+.filter-bar {
+    background: var(--pl-surface);
+    border: 1px solid var(--pl-border);
+    border-radius: var(--pl-radius-lg);
+    transition: var(--pl-transition);
+}
+
+.filter-bar:hover {
+    box-shadow: var(--pl-shadow-md) !important;
+}
+
+.filter-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--pl-text-muted);
+    display: block;
+}
+
+/* Input / Select */
+.filter-input,
+.filter-input.form-control,
+.filter-input.form-select {
+    border: 1.5px solid var(--pl-border);
+    border-radius: 10px;
+    padding: 0.55rem 0.85rem;
+    font-size: 0.92rem;
+    color: var(--pl-text);
+    background: var(--pl-surface-muted);
+    transition: var(--pl-transition);
+}
+
+.filter-input:focus,
+.filter-input.form-control:focus,
+.filter-input.form-select:focus {
+    border-color: var(--pl-primary);
+    background: var(--pl-surface);
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.12);
+    outline: none;
+}
+
+/* Input group icon */
+.filter-input-group .input-group-text.filter-input-icon {
+    background: var(--pl-surface-muted);
+    border: 1.5px solid var(--pl-border);
+    border-right: none;
+    border-radius: 10px 0 0 10px;
+    color: var(--pl-text-muted);
+    transition: var(--pl-transition);
+}
+
+.filter-input-group:focus-within .filter-input-icon {
+    border-color: var(--pl-primary);
+    background: var(--pl-surface);
+    color: var(--pl-primary);
+}
+
+.filter-input-group .filter-input {
+    border-left: none;
+    border-radius: 0 10px 10px 0;
+}
+
+.filter-input-group .filter-input:focus {
+    border-left: none;
+}
+
+/* Price Range Slider */
+.filter-range {
+    accent-color: var(--pl-primary);
+    cursor: pointer;
+}
+
+.price-badge {
+    background: var(--pl-primary);
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 20px;
+    min-width: 56px;
+    text-align: center;
+    letter-spacing: 0.2px;
+}
+
+/* Result count */
+.result-count-badge {
+    background: var(--pl-surface-muted);
+    border: 1.5px solid var(--pl-border);
+    color: var(--pl-primary);
+    font-weight: 700;
+    font-size: 0.82rem;
+    padding: 2px 10px;
+    border-radius: 20px;
+    min-width: 34px;
+    text-align: center;
+}
+
+/* ── Empty State ──────────────────────────────────────────────── */
+.empty-state-container {
+    min-height: 40vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 3rem 1.5rem;
+    background: var(--pl-surface);
+    border: 1.5px dashed var(--pl-border);
+    border-radius: var(--pl-radius-lg);
+    max-width: 380px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.empty-state-icon {
+    font-size: 3.5rem;
+    line-height: 1;
+}
+
+/* ── Pagination ───────────────────────────────────────────────── */
+.pagination-btn {
+    border-radius: 10px;
+    padding: 0.5rem 1.4rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: var(--pl-transition);
+    border-width: 1.5px;
+}
+
+.pagination-btn:not(:disabled):hover {
+    background: var(--pl-primary);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.25);
+}
+
+.pagination-btn:disabled {
+    opacity: 0.38;
+    cursor: not-allowed;
+}
+
+.pagination-info {
+    background: var(--pl-surface-muted);
+    border: 1.5px solid var(--pl-border);
+    border-radius: 10px;
+    padding: 0.45rem 1.2rem;
+    font-size: 0.9rem;
+    color: var(--pl-text-muted);
+    white-space: nowrap;
+}
+
+.pagination-info strong {
+    color: var(--pl-text);
+}
+
+/* ── Responsive Tweaks ────────────────────────────────────────── */
+@media (max-width: 576px) {
+    .filter-bar {
+        padding: 1rem !important;
+    }
+
+    .guest-banner {
+        text-align: center;
+    }
+}

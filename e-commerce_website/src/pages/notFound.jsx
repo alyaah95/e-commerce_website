@@ -8,7 +8,7 @@ const NotFound = () => {
         <h1>404</h1>
         <p>Oops! The page you're looking for doesn't exist.</p>
         <Link to="/">
-        <button className="btn btn-primary">Go to Product App</button>
+        <button className="btn btn-primary">Go to My Cart Bliss App</button>
         </Link>
       </div>
     </div>

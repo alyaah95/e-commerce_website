@@ -7,7 +7,6 @@ import LanguageContext from './context/context';
 import { useState, lazy, Suspense, useEffect } from 'react'; 
 import { useDispatch, useSelector } from 'react-redux'; 
 import { fetchCartItems } from './store/slices/productCart'; 
-import { reset,setCounterValue } from './store/slices/counter'; 
 import { loginSuccess } from './store/slices/authSlice'; 
 import ForgotPassword from './components/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
@@ -59,7 +58,7 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
               <Route path="/profile" element={isAuthenticated ? <Profile /> : <Login />} />
-              <Route path="/wishlist" element={isAuthenticated ? <WishListPage /> : <Login />} />
+              <Route path="/wishlist" element={ <WishListPage /> } />
               
               
               <Route

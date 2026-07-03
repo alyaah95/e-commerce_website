@@ -1,164 +1,432 @@
-/* Container Styling */
-.wishlist-container {
+/* ============================================================
+   WishlistPage.css
+   Fully consistent with the site design system:
+   — Same palette tokens as OrderTrackingPage / ProductCard
+   — Same shadow scale, radius scale, transition curve
+   — Bootstrap 5 compatible (no conflicts)
+   ============================================================ */
+
+/* ── Variables — mirrors every other page on the site ────────── */
+:root {
+    --wl-primary: #0d6efd;
+    --wl-primary-dark: #0a58ca;
+    --wl-primary-soft: #eff6ff;
+    --wl-danger: #dc3545;
+    --wl-danger-soft: #fff5f5;
+    --wl-success: #198754;
+    --wl-success-soft: #f0fdf4;
+
+    --wl-bg: #f4f6fb;
+    /* same as --otp-bg        */
+    --wl-surface: #ffffff;
+    /* same as --otp-surface   */
+    --wl-surface-2: #f8fafc;
+    /* same as --otp-surface-2 */
+    --wl-border: #e8edf5;
+    /* same as --otp-border    */
+
+    --wl-text: #111827;
+    /* same as --otp-text      */
+    --wl-text-muted: #6b7280;
+    /* same as --otp-text-muted*/
+    --wl-text-faint: #9ca3af;
+    /* same as --otp-text-faint*/
+
+    --wl-radius-xl: 24px;
+    /* card corners            */
+    --wl-radius-lg: 16px;
+    --wl-radius: 12px;
+    --wl-radius-sm: 8px;
+
+    --wl-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    --wl-shadow-hover: 0 16px 48px rgba(0, 0, 0, 0.12);
+    --wl-shadow-card: 0 2px 12px rgba(0, 0, 0, 0.05);
+
+    --wl-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Page shell ──────────────────────────────────────────────── */
+.wl-page {
+    background: var(--wl-bg);
+    min-height: 100vh;
+    padding: 2.5rem 1rem 6rem;
+}
+
+.wl-container {
     max-width: 1200px;
-    margin: 40px auto;
-    padding: 0 20px;
-    font-family: 'Poppins', sans-serif;
-    /* أو أي خط أنيق تستخدميه */
+    margin: 0 auto;
 }
 
-.wishlist-container h2 {
-    font-size: 2rem;
-    color: #2d3436;
-    margin-bottom: 30px;
-    border-bottom: 3px solid #ff4757;
-    display: inline-block;
-    padding-bottom: 10px;
-}
-
-/* Grid Layout */
-.wishlist-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 30px;
-    padding: 20px 0;
-}
-
-/* Item Card Styling */
-.wishlist-item {
-    background: #ffffff;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+/* ═══════════════════════════════════════════════════════════════
+   PAGE HEADER (Centered Version)
+═══════════════════════════════════════════════════════════════ */
+.wl-header {
     display: flex;
     flex-direction: column;
-    position: relative;
-    border: 1px solid #f0f0f0;
+    /* تغيير من row إلى column للتوسط المثالي */
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    gap: 1.5rem;
 }
 
-.wishlist-item:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
-}
-
-/* Image Wrapper */
-.wishlist-item img {
-    width: 100%;
-    height: 250px;
-    object-fit: contain;
-    /* لتجنب قص صورة المنتج */
-    background: #f9f9f9;
-    padding: 15px;
-    transition: transform 0.5s ease;
-}
-
-.wishlist-item:hover img {
-    transform: scale(1.05);
-}
-
-/* Item Content */
-.item-info {
-    padding: 20px;
+.wl-header-text {
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
-    background: #fff;
+    align-items: center;
 }
 
-.item-info h4 {
-    font-size: 1.1rem;
-    color: #2d3436;
-    margin-bottom: 10px;
-    height: 45px;
-    /* لتوحيد ارتفاع العناوين */
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+.wl-title {
+    font-size: clamp(1.75rem, 4vw, 2.4rem);
+    font-weight: 800;
+    color: var(--wl-text);
+    letter-spacing: -0.6px;
+    margin: 0 0 0.5rem;
+    /* زيادة المسافة قليلاً */
 }
 
-.item-info .price {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #2ecc71;
-    margin-bottom: 20px;
+.wl-subtitle {
+    font-size: 0.95rem;
+    color: var(--wl-text-muted);
+    margin: 0;
+    max-width: 400px;
+    /* لضمان عدم تمدد النص بشكل مبالغ فيه */
 }
 
-/* Action Buttons */
-.actions {
+/* Stat badge (سيظهر الآن تحت العنوان مباشرة في المنتصف) */
+.wl-header-stat {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-top: auto;
+    align-items: center;
+    background: var(--wl-surface);
+    border: 1.5px solid var(--wl-border);
+    border-radius: var(--wl-radius-lg);
+    padding: 0.65rem 1.4rem;
+    box-shadow: var(--wl-shadow-card);
+    gap: 0.1rem;
+    flex-shrink: 0;
 }
 
-.add-to-cart-btn {
-    background: #2d3436;
-    color: #fff;
-    border: none;
-    padding: 12px;
-    border-radius: 8px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: background 0.3s ease;
+/* ═══════════════════════════════════════════════════════════════
+   EMPTY STATE
+═══════════════════════════════════════════════════════════════ */
+.wl-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 5rem 2rem;
+    background: var(--wl-surface);
+    border: 2px dashed var(--wl-border);
+    border-radius: var(--wl-radius-xl);
+    box-shadow: var(--wl-shadow-card);
+    color: var(--wl-text-muted);
+}
+
+.wl-empty-icon {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    background: var(--wl-surface-2);
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 1.5rem;
+    color: #fca5a5;
+    /* soft red — heart icon */
+    border: 1.5px solid var(--wl-border);
+}
+
+.wl-empty h4 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--wl-text);
+    margin-bottom: 0.4rem;
+}
+
+.wl-empty p {
+    font-size: 0.92rem;
+    color: var(--wl-text-muted);
+    margin-bottom: 2rem;
+    max-width: 300px;
+}
+
+.wl-shop-btn {
+    display: inline-flex;
+    align-items: center;
     gap: 8px;
-}
-
-.add-to-cart-btn:hover {
-    background: #ff4757;
-    /* يتغير للون أحمر عند الوقوف عليه ليعطي حيوية */
-}
-
-.remove-btn {
-    background: #fff;
-    color: #ff4757;
-    border: 1px solid #ff4757;
-    padding: 8px;
-    border-radius: 8px;
-    font-size: 0.85rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.remove-btn:hover {
-    background: #fff5f5;
-    text-decoration: none;
-    /* ألغينا الخط السفلي وجعلناه يبدو كزر حقيقي */
-}
-
-/* Empty State Styling */
-.empty-wishlist {
-    text-align: center;
-    padding: 80px 20px;
-    background: #f8f9fa;
-    border-radius: 20px;
-    border: 2px dashed #ddd;
-}
-
-.empty-wishlist p {
-    font-size: 1.3rem;
-    color: #636e72;
-    margin-bottom: 25px;
-}
-
-.empty-wishlist button {
-    background: #2d3436;
-    color: white;
-    padding: 12px 30px;
+    background: var(--wl-primary);
+    color: #fff;
     border: none;
-    border-radius: 30px;
-    font-size: 1rem;
+    padding: 0.65rem 1.6rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 700;
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: var(--wl-transition);
+    letter-spacing: 0.2px;
 }
 
-.empty-wishlist button:hover {
+.wl-shop-btn:hover {
+    background: var(--wl-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(13, 110, 253, 0.3);
+}
+
+.wl-shop-btn:active {
+    transform: translateY(0);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PRODUCT GRID
+═══════════════════════════════════════════════════════════════ */
+.wl-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.25rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   WISHLIST CARD
+═══════════════════════════════════════════════════════════════ */
+.wl-card {
+    background: var(--wl-surface);
+    border-radius: var(--wl-radius-xl);
+    border: 1.5px solid transparent;
+    box-shadow: var(--wl-shadow-card);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: var(--wl-transition);
+    position: relative;
+}
+
+.wl-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--wl-shadow-hover);
+    border-color: var(--wl-border);
+}
+
+/* ── Image area ── */
+.wl-card-img-wrap {
+    position: relative;
+    background: var(--wl-surface-2);
+    border-bottom: 1.5px solid var(--wl-border);
+    overflow: hidden;
+}
+
+.wl-card-img {
+    width: 100%;
+    height: 210px;
+    object-fit: contain;
+    padding: 1rem;
+    display: block;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.wl-card:hover .wl-card-img {
     transform: scale(1.05);
+}
+
+/* ── Quick-remove pill ── */
+.wl-remove-pill {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--wl-surface);
+    border: 1.5px solid var(--wl-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--wl-text-faint);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.09);
+    transition: var(--wl-transition);
+
+    /* Hidden at rest — revealed on card hover */
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.wl-card:hover .wl-remove-pill {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.wl-remove-pill:hover {
+    background: var(--wl-danger-soft);
+    border-color: #fecaca;
+    color: var(--wl-danger);
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.18);
+}
+
+.wl-remove-pill:active {
+    transform: scale(0.92);
+}
+
+/* ── Card body ── */
+.wl-card-body {
+    padding: 1rem 1.1rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+/* Title */
+.wl-card-title {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--wl-text);
+    line-height: 1.4;
+    margin-bottom: 0.85rem;
+
+    /* Two-line clamp */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 2.5rem;
+}
+
+/* Footer: price + CTA */
+.wl-card-footer {
+    margin-top: auto;
+    border-top: 1.5px solid var(--wl-border);
+    padding-top: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+/* Price */
+.wl-card-price {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--wl-primary-dark);
+    letter-spacing: -0.3px;
+    white-space: nowrap;
+}
+
+/* Add to cart button */
+.wl-cart-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--wl-primary);
+    color: #fff;
+    border: none;
+    padding: 0.42rem 0.9rem;
+    border-radius: var(--wl-radius-sm);
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    letter-spacing: 0.2px;
+    transition: var(--wl-transition);
+}
+
+.wl-cart-btn:hover {
+    background: var(--wl-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 14px rgba(13, 110, 253, 0.32);
+}
+
+.wl-cart-btn:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.wl-cart-btn:focus-visible {
+    outline: 3px solid rgba(13, 110, 253, 0.4);
+    outline-offset: 2px;
+}
+
+.wl-cart-btn.btn-secondary {
+    opacity: 0.6;
+    background: var(--wl-text-muted);
+    cursor: not-allowed;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════════════════ */
+
+/* Tablet */
+@media (max-width: 768px) {
+    .wl-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+
+    .wl-card-img {
+        height: 180px;
+    }
+
+    /* Always show remove pill on touch devices (no hover) */
+    .wl-remove-pill {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .wl-page {
+        padding: 1.5rem 0.75rem 5rem;
+    }
+
+    .wl-header {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 1.75rem;
+    }
+
+    .wl-header-stat {
+        flex-direction: row;
+        gap: 0.5rem;
+        align-items: center;
+        padding: 0.5rem 1rem;
+    }
+
+    .wl-stat-value {
+        font-size: 1.2rem;
+    }
+
+    .wl-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+
+    .wl-card-img {
+        height: 150px;
+        padding: 0.65rem;
+    }
+
+    .wl-card-body {
+        padding: 0.75rem;
+    }
+
+    .wl-card-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.6rem;
+    }
+
+    .wl-cart-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 0.5rem;
+    }
+
+    .wl-empty {
+        padding: 3.5rem 1.25rem;
+    }
 }

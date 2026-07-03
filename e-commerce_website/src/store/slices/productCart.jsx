@@ -1,318 +1,275 @@
 
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import api from '../../apis/axiosConfig'; 
+import api from '../../apis/axiosConfig';
 import axiosInstance from '../../apis/config';
 
-
-
-
-// const DUMMY_JSON_PRODUCTS_API_BASE_URL = 'https://dummyjson.com/products';
-
+// ─── THUNKS ───────────────────────────────────────────────────────────────────
 
 export const fetchCartItems = createAsyncThunk(
-    'productCart/fetchCartItems',
-    async (_, { rejectWithValue }) => {
-        console.log("[Thunk] fetchCartItems: محاولة جلب عناصر السلة."); 
-        try {
-            const cartResponse = await api.get('/cart');
-            const cartItems = cartResponse.data;
-            console.log(cartResponse)
-            console.log("[Thunk] fetchCartItems: تم جلب عناصر السلة الخام بنجاح. البيانات:", cartItems); 
-      
-            if (cartItems.length === 0) return [];
-           
-            const detailedCartItems = await Promise.all(
-                cartItems.map(async (item) => {
-                    try {
-                        // 1. ✅ استخدام axiosInstance.get بشكل صحيح
-                        const productDetailsResponse = await axiosInstance.get(`/products/${item.product_id}`);
-                        
-                        // 2. ❌ إزالة التحقق الخاطئ .ok (Axios لا يستخدمها)
-                        // if (!productDetailsResponse.ok) { ... } 
-                        
-                        // 3. ✅ استخراج البيانات مباشرة من .data (Axios لا يستخدم .json())
-                        const productDetails = productDetailsResponse.data; 
-                        
-                        console.log(`[Thunk] fetchCartItems: تم جلب التفاصيل للمنتج ${item.product_id}. المخزون: ${productDetails.stock}`); // LOG
+  'productCart/fetchCartItems',
+  async (_, { rejectWithValue }) => {
+    try {
+      const cartResponse = await api.get('/cart');
+      const cartItems = cartResponse.data;
 
-                        return {
-                            ...item, 
-                            stock: productDetails.stock, 
-                        };
-                    } catch (productError) {
-                        console.warn(`[تحذير Thunk] fetchCartItems: تعذر جلب التفاصيل للمنتج ${item.product_id}:`, productError); 
-                        return { ...item, stock: 0 }; 
-                    }
-                })
+      if (cartItems.length === 0) return [];
+
+      const detailedCartItems = await Promise.all(
+        cartItems.map(async (item) => {
+          try {
+            const productDetailsResponse = await axiosInstance.get(
+              `/products/${item.product_id}`
             );
+            const productDetails = productDetailsResponse.data;
+            return { ...item, stock: productDetails.stock };
+          } catch {
+            return { ...item, stock: 0 };
+          }
+        })
+      );
 
-            console.log("[Thunk] fetchCartItems: تم جلب عناصر السلة التفصيلية بنجاح. البيانات:", detailedCartItems); 
-            return detailedCartItems; 
-        } catch (error) {
-            console.error("[خطأ Thunk] fetchCartItems:", error.response?.data?.message || error.message); 
-            return rejectWithValue(error.response.data.message || 'فشل جلب عناصر السلة');
-        }
+      return detailedCartItems;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || 'Failed to fetch cart items'
+      );
     }
+  }
 );
-
 
 export const addProductToCartBackend = createAsyncThunk(
-    'productCart/addProductToCartBackend',
-    async (productData, { dispatch, rejectWithValue }) => {
-        console.log("[Thunk] addProductToCartBackend: محاولة إضافة المنتج.", productData); 
-        try {
-            const response = await api.post('/cart/add', {
-                productId: productData.id,
-                title: productData.title,
-                imageUrl: productData.image,
-                price: productData.price,
-                quantity: productData.quantity,
-            });
-            
-            console.log("[Thunk] addProductToCartBackend: تم إضافة المنتج بنجاح. إرسال تحديث محلي.", response.data.item); 
-            // dispatch(fetchCartItems()); 
-            return response.data;
-        } catch (error) {
-            console.error("[خطأ Thunk] addProductToCartBackend:", error.response?.data?.message || error.message); 
-            return rejectWithValue(error.response.data.message || 'فشل إضافة المنتج إلى السلة');
-        }
+  'productCart/addProductToCartBackend',
+  async (productData, { rejectWithValue }) => {
+    try {
+      const response = await api.post('/cart/add', {
+        productId: productData.id,
+        title: productData.title,
+        imageUrl: productData.image,
+        price: productData.price,
+        quantity: productData.quantity,
+      });
+      // Pass stock through so the reducer can store it correctly
+      return { ...response.data, stock: productData.stock };
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || 'Failed to add product'
+      );
     }
+  }
 );
-
 
 export const updateProductQuantityBackend = createAsyncThunk(
-    'productCart/updateProductQuantityBackend',
-    async ({ productId, quantity }, { dispatch, rejectWithValue }) => {
-        console.log(`[Thunk] updateProductQuantityBackend: محاولة تحديث المنتج ${productId} إلى كمية ${quantity}`); 
-        try {
-            const response = await api.put(`/cart/update/${productId}`, { quantity });
-            console.log(`[Thunk] updateProductQuantityBackend: نجاح للمنتج ${productId}. إرسال تحديث محلي.`, response.data.item); 
-            // dispatch(fetchCartItems()); 
-            return response.data;
-        } catch (error) {
-            console.error(`[خطأ Thunk] updateProductQuantityBackend للمنتج ${productId}:`, error.response?.data?.message || error.message); // LOG
-            return rejectWithValue(error.response.data.message || 'فشل تحديث كمية المنتج');
-        }
+  'productCart/updateProductQuantityBackend',
+  async ({ productId, quantity }, { rejectWithValue }) => {
+    try {
+      const response = await api.put(`/cart/update/${productId}`, { quantity });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || 'Failed to update cart quantity'
+      );
     }
+  }
 );
-
 
 export const removeProductFromCartBackend = createAsyncThunk(
-    'productCart/removeProductFromCartBackend',
-    async (productId, { dispatch, rejectWithValue }) => {
-        console.log(`[Thunk] removeProductFromCartBackend: محاولة إزالة المنتج ${productId}`); 
-        try {
-            await api.delete(`/cart/remove/${productId}`);
-            console.log(`[Thunk] removeProductFromCartBackend: تم إزالة المنتج ${productId} بنجاح. إرسال تحديث محلي.`); 
-            // dispatch(fetchCartItems()); 
-            return productId;
-        } catch (error) {
-            console.error(`[خطأ Thunk] removeProductFromCartBackend للمنتج ${productId}:`, error.response?.data?.message || error.message); // LOG
-            return rejectWithValue(error.response.data.message || 'فشل إزالة المنتج من السلة');
-        }
+  'productCart/removeProductFromCartBackend',
+  async (productId, { rejectWithValue }) => {
+    try {
+      await api.delete(`/cart/remove/${productId}`);
+      return productId;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || 'Failed to remove product from cart'
+      );
     }
+  }
 );
-
-const mapItemToProduct = (item) => ({
-    id: item.product_id,
-    title: item.title,
-    image: item.image_url,
-    quantity: item.quantity,
-    price: parseFloat(item.price),
-    stock: item.stock || 20, // قيمة افتراضية
-});
 
 export const placeOrderThunk = createAsyncThunk(
-    'productCart/placeOrder',
-    async (orderDetails, { rejectWithValue, dispatch }) => {
-        console.log("[Thunk] placeOrder: محاولة وضع طلب جديد.", orderDetails); 
-        try {
-            // orderDetails = { shippingAddress, totalAmount }
-            // يجب أن يكون لديك مسار API مُعد لاستقبال هذا الطلب، مثل: /api/orders/place-order
-            const response = await api.post('/cart/place-order', orderDetails);
-            
-            // ✅ مسح عداد السلة بالكامل في Redux
-            // بما أن الـ Backend سيمسح cart_items، سنمسح الـ Redux state هنا
-            if (orderDetails.isSingleProduct && orderDetails.items.length === 1) {
-                // إذا كان طلب منتج واحد، فقط أزل ذلك المنتج
-                const productIdToRemove = orderDetails.items[0].productId;
-                dispatch(removeProductLocal(productIdToRemove));
-            } else {
-                // إذا كان طلب كامل السلة، امسح السلة بالكامل في Redux
-                dispatch(resetCart());
-            }
-            return response.data; // يحتوي على { orderId, trackingNumber, message }
-        } catch (error) {
-            console.error("[خطأ Thunk] placeOrder:", error.response?.data?.message || error.message); 
-            return rejectWithValue(error.response?.data?.message || 'فشل إتمام الطلب');
-        }
+  'productCart/placeOrder',
+  async (orderDetails, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await api.post('/cart/place-order', orderDetails);
+
+      if (orderDetails.isSingleProduct && orderDetails.items?.length === 1) {
+        dispatch(removeProductLocal(orderDetails.items[0].productId));
+      } else {
+        dispatch(resetCart());
+      }
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || 'Failed to place order'
+      );
     }
+  }
 );
 
+// ─── HELPER ───────────────────────────────────────────────────────────────────
 
-
-
-
-
-const ProductCartSlice = createSlice({
-    name: "productCart",
-    initialState: {
-        products: [],
-        loading: 'idle', 
-        error: null,
-        productDetailsCache: {}
-    },
-    reducers: {
-        
-        addProductToCartLocal: (state, action) => {
-            console.log(`[Reducer] addProductToCartLocal: تحديث الحالة. معرف المنتج: ${action.payload.product_id}, الكمية: ${action.payload.quantity}`); // LOG
-            const newItem = action.payload;
-            const product = state.products.find(p => p.id === newItem.product_id);
-
-            if (product) {
-                product.quantity = newItem.quantity;
-            } else {
-                state.products.push({
-                    id: newItem.product_id,
-                    title: newItem.title,
-                    image: newItem.image_url,
-                    quantity: newItem.quantity,
-                    price: parseFloat(newItem.price),
-                    stock: 0, 
-                });
-            }
-        },
-        updateProductQuantityLocal: (state, action) => {
-            console.log(`[Reducer] updateProductQuantityLocal: تحديث الحالة. معرف المنتج: ${action.payload.product_id}, الكمية الجديدة: ${action.payload.quantity}`); // LOG
-            const updatedItem = action.payload;
-            const product = state.products.find(p => p.id === updatedItem.product_id);
-            if (product) {
-                product.quantity = updatedItem.quantity;
-            }
-        },
-        removeProductLocal: (state, action) => {
-            console.log(`[Reducer] removeProductLocal: إزالة المنتج من الحالة. معرف المنتج: ${action.payload}`); 
-            state.products = state.products.filter(p => p.id !== action.payload);
-        },
-       
-        setCartItems: (state, action) => {
-            console.log(`[Reducer] setCartItems: تعيين حالة السلة بالكامل. طول البيانات: ${action.payload.length}`); 
-            state.products = action.payload.map(item => ({
-                id: item.product_id,
-                title: item.title,
-                image: item.image_url,
-                quantity: item.quantity,
-                price: parseFloat(item.price),
-                stock: item.stock || 0, 
-            }));
-        },
-
-        resetCart: (state) => { 
-            console.log("[Reducer] resetCart: تم مسح قائمة المنتجات في Redux.");
-            state.products = [];
-            state.loading = 'idle';
-            state.error = null;
-            state.productDetailsCache = {}; 
-        }
-    },
-   
-    extraReducers: (builder) => {
-        builder
-          
-            .addCase(fetchCartItems.pending, (state) => {
-                console.log("[ExtraReducer] fetchCartItems.pending"); 
-                state.loading = 'pending';
-                state.error = null;
-            })
-            .addCase(fetchCartItems.fulfilled, (state, action) => {
-                console.log("[ExtraReducer] fetchCartItems.fulfilled. طول البيانات:", action.payload.length); 
-                state.loading = 'succeeded';
-          
-                state.products = action.payload.map(mapItemToProduct);
-            })
-            .addCase(fetchCartItems.rejected, (state, action) => {
-                console.log("[ExtraReducer] fetchCartItems.rejected. الخطأ:", action.payload); 
-                state.loading = 'failed';
-                state.error = action.payload;
-            })
-           
-            .addCase(addProductToCartBackend.pending, (state) => {
-                console.log("[ExtraReducer] addProductToCartBackend.pending"); 
-                // state.loading = 'pending';
-                state.error = null;
-            })
-            .addCase(addProductToCartBackend.fulfilled, (state, action) => {
-                console.log("[ExtraReducer] addProductToCartBackend.fulfilled (سيؤدي إلى تشغيل fetchCartItems)");
-                state.loading = 'succeeded';
-                const newItem = action.payload.item;
-                const existingProduct = state.products.find(p => p.id === newItem.product_id);
-                if (existingProduct) {
-                    existingProduct.quantity = newItem.quantity;
-                } else {
-                    state.products.push(mapItemToProduct(newItem));
-                }
-            })
-            .addCase(addProductToCartBackend.rejected, (state, action) => {
-                console.log("[ExtraReducer] addProductToCartBackend.rejected. الخطأ:", action.payload); 
-                state.loading = 'failed';
-                state.error = action.payload;
-            })
-            .addCase(updateProductQuantityBackend.pending, (state) => {
-                console.log("[ExtraReducer] updateProductQuantityBackend.pending"); 
-                // state.loading = 'pending';
-                state.error = null;
-            })
-            .addCase(updateProductQuantityBackend.fulfilled, (state, action) => {
-                console.log("[ExtraReducer] updateProductQuantityBackend.fulfilled (سيؤدي إلى تشغيل fetchCartItems)"); 
-                state.loading = 'succeeded';
-                const updatedItem = action.payload.item;
-                const product = state.products.find(p => p.id === updatedItem.product_id);
-                if (product) {
-                    product.quantity = updatedItem.quantity;
-                }
-            })
-            .addCase(updateProductQuantityBackend.rejected, (state, action) => {
-                console.log("[ExtraReducer] updateProductQuantityBackend.rejected. الخطأ:", action.payload); 
-                state.loading = 'failed';
-                state.error = action.payload;
-            })
-            .addCase(removeProductFromCartBackend.pending, (state) => {
-                console.log("[ExtraReducer] removeProductFromCartBackend.pending"); 
-                state.loading = 'pending';
-                state.error = null;
-            })
-            .addCase(removeProductFromCartBackend.fulfilled, (state, action) => {
-                console.log("[ExtraReducer] removeProductFromCartBackend.fulfilled (سيؤدي إلى تشغيل fetchCartItems)"); 
-                state.loading = 'succeeded';
-                const deletedId = action.payload;
-                state.products = state.products.filter(p => p.id !== deletedId);
-            })
-            .addCase(removeProductFromCartBackend.rejected, (state, action) => {
-                console.log("[ExtraReducer] removeProductFromCartBackend.rejected. الخطأ:", action.payload); 
-                state.loading = 'failed';
-                state.error = action.payload;
-            })
-
-            .addCase(placeOrderThunk.pending, (state) => {
-                state.loading = 'pending';
-                state.error = null;
-            })
-            .addCase(placeOrderThunk.fulfilled, (state, action) => {
-                state.loading = 'succeeded';
-                state.error = null;
-                // 🛑 لا حاجة لمسح state.products هنا، لأننا استخدمنا dispatch(resetCart()) في الـ Thunk.
-            })
-            .addCase(placeOrderThunk.rejected, (state, action) => {
-                state.loading = 'failed';
-                state.error = action.payload;
-            });
-            
-            
-    },
+// FIX 1: stock is now a real second argument, not silently ignored
+const mapItemToProduct = (item, stock) => ({
+  // FIX 3: store ids as Numbers everywhere so comparisons never fail
+  id: Number(item.product_id),
+  title: item.title,
+  image: item.image_url,
+  quantity: item.quantity,
+  price: parseFloat(item.price),
+  stock: stock !== undefined ? stock : (item.stock ?? 0),
 });
 
-export const { addProductToCartLocal, removeProductLocal, updateProductQuantityLocal, setCartItems, resetCart  } = ProductCartSlice.actions;
+// ─── SLICE ────────────────────────────────────────────────────────────────────
 
+const ProductCartSlice = createSlice({
+  name: 'productCart',
+  initialState: {
+    products: [],
+    loading: 'idle',
+    error: null,
+  },
+  reducers: {
+    addProductToCartLocal: (state, action) => {
+      const newItem = action.payload;
+      const id = Number(newItem.product_id);
+      const product = state.products.find((p) => p.id === id);
+      if (product) {
+        product.quantity = newItem.quantity;
+      } else {
+        state.products.push(mapItemToProduct(newItem));
+      }
+    },
+
+    updateProductQuantityLocal: (state, action) => {
+      const updatedItem = action.payload;
+      const id = Number(updatedItem.product_id);
+      const product = state.products.find((p) => p.id === id);
+      if (product) {
+        product.quantity = updatedItem.quantity;
+      }
+    },
+
+    removeProductLocal: (state, action) => {
+      // FIX 3: compare as Numbers
+      const id = Number(action.payload);
+      state.products = state.products.filter((p) => p.id !== id);
+    },
+
+    setCartItems: (state, action) => {
+      state.products = action.payload.map((item) => mapItemToProduct(item));
+    },
+
+    resetCart: (state) => {
+      state.products = [];
+      state.loading = 'idle';
+      state.error = null;
+    },
+  },
+
+  extraReducers: (builder) => {
+    builder
+      // fetchCartItems — full server sync on page load
+      .addCase(fetchCartItems.pending, (state) => {
+        state.loading = 'pending';
+        state.error = null;
+      })
+      .addCase(fetchCartItems.fulfilled, (state, action) => {
+        state.loading = 'succeeded';
+        console.log("=== FETCH CART SUCCESS ===", action.payload);
+        // FIX 1: stock comes from the enriched payload, passed as second arg
+        state.products = action.payload.map((item) =>
+          mapItemToProduct(item, item.stock)
+        );
+      })
+      .addCase(fetchCartItems.rejected, (state, action) => {
+        state.loading = 'failed';
+        state.error = action.payload;
+      })
+
+      // addProductToCartBackend — optimistic local update from server response
+      .addCase(addProductToCartBackend.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(addProductToCartBackend.fulfilled, (state, action) => {
+        state.loading = 'succeeded';
+        console.log("=== ADD PRODUCT SUCCESS ===", action.payload);
+        const newItem = action.payload.item;
+        const stock = action.payload.stock; // FIX 1: real stock value preserved
+        // FIX 3: compare as Numbers
+        const id = Number(newItem.product_id);
+        const existingProduct = state.products.find((p) => p.id === id);
+        if (existingProduct) {
+          existingProduct.quantity = newItem.quantity;
+          existingProduct.stock = stock;
+        } else {
+          // FIX 1: pass stock as second argument so it is never dropped
+          state.products.push(mapItemToProduct(newItem, stock));
+        }
+      })
+      .addCase(addProductToCartBackend.rejected, (state, action) => {
+        state.loading = 'failed';
+        state.error = action.payload;
+      })
+
+      // updateProductQuantityBackend — patch quantity in Redux from DB response
+      .addCase(updateProductQuantityBackend.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(updateProductQuantityBackend.fulfilled, (state, action) => {
+        state.loading = 'succeeded';
+        const updatedItem = action.payload.item;
+        // FIX 3: compare as Numbers
+        const id = Number(updatedItem.product_id);
+        const product = state.products.find((p) => p.id === id);
+        if (product) {
+          product.quantity = updatedItem.quantity;
+        }
+      })
+      .addCase(updateProductQuantityBackend.rejected, (state, action) => {
+        state.loading = 'failed';
+        state.error = action.payload;
+      })
+
+      // removeProductFromCartBackend
+      .addCase(removeProductFromCartBackend.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(removeProductFromCartBackend.fulfilled, (state, action) => {
+        state.loading = 'succeeded';
+        // FIX 3: compare as Numbers
+        const id = Number(action.payload);
+        state.products = state.products.filter((p) => p.id !== id);
+      })
+      .addCase(removeProductFromCartBackend.rejected, (state, action) => {
+        state.loading = 'failed';
+        state.error = action.payload;
+      })
+
+      // placeOrderThunk
+      .addCase(placeOrderThunk.pending, (state) => {
+        state.loading = 'pending';
+        state.error = null;
+      })
+      .addCase(placeOrderThunk.fulfilled, (state) => {
+        state.loading = 'succeeded';
+        state.error = null;
+        // cart cleared by resetCart / removeProductLocal dispatched inside thunk
+      })
+      .addCase(placeOrderThunk.rejected, (state, action) => {
+        state.loading = 'failed';
+        state.error = action.payload;
+      });
+  },
+});
+
+export const {
+  addProductToCartLocal,
+  removeProductLocal,
+  updateProductQuantityLocal,
+  setCartItems,
+  resetCart,
+} = ProductCartSlice.actions;
 
 export default ProductCartSlice.reducer;

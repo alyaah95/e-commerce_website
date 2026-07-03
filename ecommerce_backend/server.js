@@ -10,8 +10,10 @@ const userRoutes = require('./routes/userRoutes');
 const cartRoutes = require('./routes/cartRoutes'); 
 const orderRoutes = require('./routes/orderRoutes');
 
+const { runCartCleanup, startCleanupCron } = require('./jobs/cartCleanup');
+
 const app = express();
-// const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000;
 
 
 app.use(cors({
@@ -42,10 +44,18 @@ app.use('/api/cart', cartRoutes);
 app.use('/api/orders', orderRoutes);
 
 
-// app.listen(PORT, () => {
-//   console.log(`Server running on port ${PORT}`);
-//   console.log(`Access backend at: http://localhost:${PORT}`);
-// });
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, async () => {
+    console.log(`Server running locally on port ${PORT}`);
+    try {
+      // الـ Cleanup هيشتغل لوكال بس عشان ما يعطلش فيرسل
+      await runCartCleanup();
+      startCleanupCron();
+    } catch (err) {
+      console.error('Failed to initialize cleanup tasks:', err.message);
+    }
+  });
+}
 
 // Global Error Handler
 app.use((err, req, res, next) => {

@@ -1,50 +1,113 @@
+/* ============================================================
+   emptyCart.css
+   Consistent with site design system (Bootstrap 5 compatible)
+   The cart image and its colours are preserved exactly.
+   ============================================================ */
 
-
-body {
-    background-color: #eee;
-    font-family: 'Calibri', sans-serif !important;
+/* ── Page shell ── */
+.ec-page {
+    background: #f4f6fb;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
 }
 
-.mt-100 {
-    margin-top: 100px;
-
+.ec-container {
+    width: 100%;
+    max-width: 500px;
 }
 
-
-.card {
-    margin-bottom: 30px;
-    border: 0;
-    -webkit-transition: all .3s ease;
-    transition: all .3s ease;
-    letter-spacing: .5px;
-    border-radius: 8px;
-    -webkit-box-shadow: 1px 5px 24px 0 rgba(68, 102, 242, .05);
-    box-shadow: 1px 5px 24px 0 rgba(68, 102, 242, .05);
+/* ── Card ── */
+.ec-card {
+    background: #ffffff;
+    border-radius: 24px;
+    border: 2px dashed #e8edf5;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    padding: 4rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0;
+    /* Animation */
+    animation: ec-fade-in 0.35s ease-out;
 }
 
-.card .card-header {
-    background-color: #fff;
-    border-bottom: none;
-    padding: 24px;
-    border-bottom: 1px solid #f6f7fb;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+@keyframes ec-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.card-header:first-child {
-    border-radius: calc(.25rem - 1px) calc(.25rem - 1px) 0 0;
+/* ── Image — preserved exactly, just given breathing room ── */
+.ec-img {
+    display: block;
+    margin-bottom: 1.75rem;
+    /* No filter, no colour changes — as requested */
 }
 
-
-
-.card .card-body {
-    padding: 30px;
-    background-color: transparent;
+/* ── Heading ── */
+.ec-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #111827;
+    letter-spacing: -0.3px;
+    margin-bottom: 0.45rem;
 }
 
-.btn-primary,
-.btn-primary.disabled,
-.btn-primary:disabled {
-    background-color: #4466f2 !important;
-    border-color: #4466f2 !important;
+/* ── Subtitle ── */
+.ec-subtitle {
+    font-size: 0.92rem;
+    color: #6b7280;
+    margin-bottom: 2rem;
+}
+
+/* ── CTA button — matches site's primary pill button ── */
+.ec-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #0d6efd;
+    color: #fff;
+    border: none;
+    padding: 0.65rem 1.75rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.2px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+}
+
+.ec-btn:hover {
+    background: #0a58ca;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(13, 110, 253, 0.3);
+    color: #fff;
+}
+
+.ec-btn:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+    .ec-card {
+        padding: 3rem 1.25rem;
+        border-radius: 16px;
+    }
+
+    .ec-title {
+        font-size: 1.15rem;
+    }
 }

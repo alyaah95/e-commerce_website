@@ -1,30 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router";
-import { useDispatch , useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   removeProductFromCartBackend,
   fetchCartItems,
   placeOrderThunk,
 } from "../store/slices/productCart";
-
 import "./CheckoutPage.css";
 
 const CheckoutPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
-  
 
+  /* ── All state & logic — completely untouched ── */
   const entireCartProducts = useSelector((state) => state.productCart.products);
-  const { productId, quantity , totalAmount: passedTotalAmount, isEntireCart, isSingleProduct } = location.state || {};
-  const totalAmount = isEntireCart 
+  const { productId, quantity, totalAmount: passedTotalAmount, isEntireCart, isSingleProduct } = location.state || {};
+  const totalAmount = isEntireCart
     ? entireCartProducts.reduce((acc, item) => acc + (item.price * item.quantity), 0)
-    : passedTotalAmount; // الإجمالي الممرر لمنتج واحد
+    : passedTotalAmount;
+
   const [shippingAddress, setShippingAddress] = useState({
-    fullName: '',
-    phone: '',
-    city: '',
-    details: '' // العنوان بالتفصيل
+    fullName: "",
+    phone: "",
+    city: "",
+    details: "",
   });
   const [shippingFee, setShippingFee] = useState(0);
   const totalAmountPlusFee = totalAmount + shippingFee;
@@ -34,292 +34,392 @@ const CheckoutPage = () => {
   const [cvv, setCvv] = useState("");
   const [paymentProcessing, setPaymentProcessing] = useState(false);
 
-
   useEffect(() => {
     if (paymentProcessing) return;
-    // 🛑 التحقق من وجود بيانات للطلب
     const isValidSingleProduct = isSingleProduct && productId && quantity && totalAmount;
     const isValidEntireCart = isEntireCart && entireCartProducts.length > 0 && totalAmount;
-
     if (!isValidSingleProduct && !isValidEntireCart) {
-        const timer = setTimeout(() => {
-            if (!paymentProcessing) {
-                alert("No valid products selected.");
-                navigate("/");
-            }
-        }, 500);
-        return () => clearTimeout(timer);
+      const timer = setTimeout(() => {
+        if (!paymentProcessing) {
+          alert("No valid products selected.");
+          navigate("/");
+        }
+      }, 500);
+      return () => clearTimeout(timer);
     }
   }, [isSingleProduct, isEntireCart, productId, quantity, totalAmount, entireCartProducts.length, navigate]);
 
   useEffect(() => {
-        if (shippingAddress.details.trim().length > 5) { // إذا كتب المستخدم أكثر من 5 حروف
-            setShippingFee(50); // تكلفة توصيل ثابتة مثلاً 50
-        } else {
-            setShippingFee(0); // إذا مسح العنوان ترجع صفر
-        }
-    }, [shippingAddress.details]);
+    if (shippingAddress.details.trim().length > 5) {
+      setShippingFee(50);
+    } else {
+      setShippingFee(0);
+    }
+  }, [shippingAddress.details]);
 
   const handleAddressChange = (e) => {
     const { name, value } = e.target;
-    setShippingAddress(prev => ({ ...prev, [name]: value }));
+    setShippingAddress((prev) => ({ ...prev, [name]: value }));
   };
 
   const handlePaymentSubmit = async (e) => {
     e.preventDefault();
-
-    // 🛑 1. التحقق من الحقول الأساسية
-    if (!totalAmount || totalAmount <= 0) {
-        alert("Error: Total amount is missing or zero.");
-        return;
-    }
-    if (!cardName || !cardNumber || !expiryDate || !cvv) {
-        alert("Please fill in all payment details.");
-        return;
-    }
+    if (!totalAmount || totalAmount <= 0) { alert("Error: Total amount is missing or zero."); return; }
+    if (!cardName || !cardNumber || !expiryDate || !cvv) { alert("Please fill in all payment details."); return; }
     if (!shippingAddress.fullName || !shippingAddress.phone || !shippingAddress.city || !shippingAddress.details) {
-        alert("Please fill in all shipping address details.");
-        return;
+      alert("Please fill in all shipping address details."); return;
     }
-    
     setPaymentProcessing(true);
-
-    // 2. محاكاة نجاح الدفع
-    await new Promise((resolve) => setTimeout(resolve, 1500)); 
-
-    // 3. استدعاء API إتمام الطلب (Thunk)
+    await new Promise((resolve) => setTimeout(resolve, 1500));
     try {
-        // 🛑 إذا كان شراء منتج واحد، نرسل طلب placeOrder خاص به، وإلا نرسل طلب السلة.
-        // لتبسيط الـ Backend، سنعتبر أننا في كلتا الحالتين نرسل أمر شراء السلة الحالية
-        // ملاحظة: الـ Backend يجب أن يحتوي على منطق التعامل مع شراء منتج واحد منفصل عن السلة إذا أردتِ ذلك
-        
-        let itemsToOrder;
-        // let finalOrderDetails;
-        
-        if (isSingleProduct) {
-            // نستخدم Thunk مخصصة لشراء منتج واحد إذا كان الـ Backend يدعمها، 
-            // أو نعتمد على أن المنتج تم وضعه في السلة مسبقًا ويتم التعامل معه كجزء من السلة.
-            // 💡 بما أن طلبك هو تسهيل تتبع الطلبات، سأفترض أننا نضع المنتج في سلة مؤقتة ثم نشتريها كلها (الخيار الأسهل)
-            // لكن بما أن الـ Backend لا يدعم PlaceOrder لمنتج واحد، سنعالج السلة بالكامل.
-
-            // 💡 هنا يجب أن يكون هناك منطق لضمان أن السلة لا تحتوي إلا على هذا المنتج، أو نعتمد على شراء السلة.
-            // لتسريع التطبيق: سنستخدم نفس الـ Thunk placeOrderThunk للتعامل مع كلتا الحالتين.
-            itemsToOrder = [{ productId, quantity }];
-            // finalOrderDetails = { 
-            //     shippingAddress: shippingAddress,
-            //     totalAmount: totalAmount,
-            //     // سنفترض أن الـ Backend سيتجاهل أي عناصر في السلة غير المنتج المختار إذا كان isSingleProduct
-            // };
-
-        } else { // شراء السلة بأكملها
-            // if (entireCartProducts.length === 0) throw new Error("Cart is empty.");
-            // finalOrderDetails = { 
-            //     shippingAddress: shippingAddress,
-            //     totalAmount: totalAmount,
-            // };
-            itemsToOrder = entireCartProducts.map(p => ({
-                productId: p.id,
-                quantity: p.quantity,
-                price: p.price,
-                title: p.title
-            }));
-        }
-
-        const finalOrderDetails = { 
-            shippingAddress: shippingAddress,
-            totalAmount: totalAmount,
-            items: itemsToOrder, // 🛑 إرسال قائمة المنتجات المشتراة
-            isSingleProduct: isSingleProduct // 🛑 إرسال مؤشر نوع الطلب
-        };
-
-        const result = await dispatch(placeOrderThunk(finalOrderDetails)).unwrap();
-        
-        // if (isSingleProduct) {
-        //   dispatch(decrementByQuantity(quantity)); 
-        // }else {
-        //     dispatch(resetCounter()); 
-        // }
-
-        // 5. ✅ نجاح الطلب: التوجيه لصفحة تتبع الطلب
-        alert(`Payment Successful! Your order has been placed.`);
-        navigate(`/orders`); 
-
+      let itemsToOrder;
+      if (isSingleProduct) {
+        itemsToOrder = [{ productId, quantity }];
+      } else {
+        itemsToOrder = entireCartProducts.map((p) => ({
+          productId: p.id,
+          quantity: p.quantity,
+          price: p.price,
+          title: p.title,
+        }));
+      }
+      const finalOrderDetails = {
+        shippingAddress: shippingAddress,
+        totalAmount: totalAmount,
+        items: itemsToOrder,
+        isSingleProduct: isSingleProduct,
+      };
+      const result = await dispatch(placeOrderThunk(finalOrderDetails)).unwrap();
+      alert(`Payment Successful! Your order has been placed.`);
+      navigate(`/orders`);
     } catch (error) {
-        console.error("Error during checkout process:", error);
-        alert(`Payment failed or an error occurred: ${error.message || 'Server error'}`);
+      console.error("Error during checkout process:", error);
+      alert(`Payment failed or an error occurred: ${error.message || "Server error"}`);
     } finally {
-        setPaymentProcessing(false);
+      setPaymentProcessing(false);
     }
   };
 
-  if (isSingleProduct && (!productId || !quantity)) {
-    return <div className="checkout-loading">Loading item details...</div>;
-  }
-  if (isEntireCart && (!entireCartProducts || entireCartProducts.length === 0)) {
-    return <div className="checkout-loading">Loading your cart...</div>;
-  }
   const handleExpiryDateChange = (e) => {
     let value = e.target.value;
-    // 1. Remove any character that is not a digit or a slash
     value = value.replace(/[^0-9/]/g, "");
-
-    // 2. Add a slash after the second digit if not already present and not just a slash
     if (value.length === 2 && !value.includes("/") && value.length < 3) {
       value += "/";
     }
-
-    // 3. Prevent more than 5 characters (MM/YY)
-    if (value.length > 5) {
-      value = value.slice(0, 5);
-    }
-
+    if (value.length > 5) { value = value.slice(0, 5); }
     setExpiryDate(value);
   };
 
-
-
-  if (totalAmount === undefined || totalAmount === null) {
-    return <div className="checkout-loading">Calculating total...</div>;
+  /* ── Loading / guard states ── */
+  if (isSingleProduct && (!productId || !quantity)) {
+    return (
+      <div className="chk-fullscreen-center">
+        <div className="chk-spinner" />
+        <p className="chk-loading-text">Loading item details…</p>
+      </div>
+    );
   }
-    
-    
-  const summaryText = isEntireCart 
-    ? `You are purchasing **${entireCartProducts.length}** unique item(s).` 
-    : `You are purchasing ${quantity} item(s) for Product ID: ${productId}.`;
+  if (isEntireCart && (!entireCartProducts || entireCartProducts.length === 0)) {
+    return (
+      <div className="chk-fullscreen-center">
+        <div className="chk-spinner" />
+        <p className="chk-loading-text">Loading your cart…</p>
+      </div>
+    );
+  }
+  if (totalAmount === undefined || totalAmount === null) {
+    return (
+      <div className="chk-fullscreen-center">
+        <div className="chk-spinner" />
+        <p className="chk-loading-text">Calculating total…</p>
+      </div>
+    );
+  }
+
+  /* ── Derived display values ── */
+  const itemCount = isEntireCart ? entireCartProducts.length : quantity;
+  const summaryItems = isEntireCart
+    ? entireCartProducts
+    : [{ title: `Product #${productId}`, quantity, price: totalAmount / quantity }];
 
   return (
-    <div className="checkout-container">
-      <h2>Complete Your Purchase</h2>
-      <p className="product-summary">
-        {summaryText} **Total: ${totalAmount.toFixed(2)}**
-      </p>
-      <form onSubmit={handlePaymentSubmit} className="payment-form">
+    <div className="chk-page">
+      <div className="chk-container">
 
-        <div className="shipping-address-section" style={{ marginBottom: '30px', padding: '15px', border: '1px solid #ddd', borderRadius: '5px' }}>
-          <h3>shipping address</h3>
-          <div className="form-group">
-              <label htmlFor="fullName">full name</label>
-              <input type="text" id="fullName" name="fullName" value={shippingAddress.fullName} onChange={handleAddressChange} required />
-          </div>
-          {/* ... (باقي حقول العنوان: phone, city, details) ... */}
-          <div className="form-group">
-              <label htmlFor="phone">phone number</label>
-              <input type="tel" id="phone" name="phone" value={shippingAddress.phone} onChange={handleAddressChange} required />
-          </div>
-          <div className="form-group">
-              <label htmlFor="city">city</label>
-              <input type="text" id="city" name="city" value={shippingAddress.city} onChange={handleAddressChange} required />
-          </div>
-          <div className="form-group">
-              <label htmlFor="details">the detailed address (street, building, floor)</label>
-              <textarea id="details" name="details" value={shippingAddress.details} onChange={handleAddressChange} required rows="3"></textarea>
-          </div>
-        </div>
-        <div className="form-group">
-          <label htmlFor="cardName">Cardholder Name</label>
-          <input
-            type="text"
-            id="cardName"
-            value={cardName}
-            onChange={(e) => setCardName(e.target.value)}
-            placeholder="John Doe"
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="cardNumber">Card Number</label>
-          <input
-            type="text"
-            id="cardNumber"
-            value={cardNumber}
-            onChange={(e) =>
-              setCardNumber(e.target.value.replace(/\s/g, "").slice(0, 16))
-            } // 16 digits
-            placeholder="XXXX XXXX XXXX XXXX"
-            required
-            maxLength="16"
-          />
-        </div>
-        <div className="form-row">
-          <div className="form-group">
-            <label htmlFor="expiryDate">Expiry Date</label>
-            <input
-              type="text"
-              id="expiryDate"
-              value={expiryDate}
-              onChange={handleExpiryDateChange}
-              placeholder="MM/YY"
-              required
-              maxLength="5" // Set maxLength to 5 to allow "MM/YY"
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="cvv">CVV</label>
-            <input
-              type="text"
-              id="cvv"
-              value={cvv}
-              onChange={(e) =>
-                setCvv(e.target.value.replace(/[^0-9]/g, "").slice(0, 3))
-              } // 3 digits
-              placeholder="XXX"
-              required
-              maxLength="3"
-            />
-          </div>
+        {/* ── Page Header ── */}
+        <div className="chk-page-header">
+          <h1 className="chk-page-title">Checkout</h1>
+          <p className="chk-page-sub">
+            {isEntireCart
+              ? `${entireCartProducts.length} item${entireCartProducts.length !== 1 ? "s" : ""} from your cart`
+              : `${quantity} item${quantity !== 1 ? "s" : ""}`}
+          </p>
         </div>
 
-        <div className="order-summary-card">
-          <h3>Order Summary</h3>
-          <div className="summary-details">
-            <div className="summary-item">
-              <span>Items Subtotal:</span>
-              <span>${totalAmount.toFixed(2)}</span>
-            </div>
-            
-            <div className="summary-item">
-              <span>Shipping Fee:</span>
-              <span className={shippingFee > 0 ? "fee-amount" : "fee-placeholder"}>
-                {shippingFee > 0 ? `$${shippingFee.toFixed(2)}` : "TBD"}
-              </span>
-            </div>
+        {/* ── Two-column layout ── */}
+        <form onSubmit={handlePaymentSubmit} className="chk-layout">
 
-            {shippingFee > 0 && (
-              <div className="summary-item shipping-promo">
-                <small>Standard Delivery (Flat Rate)</small>
+          {/* ════════════════════════════
+              LEFT — Form panels
+          ════════════════════════════ */}
+          <div className="chk-form-col">
+
+            {/* ── Shipping address ── */}
+            <div className="chk-panel">
+              <div className="chk-panel-header">
+                <div className="chk-panel-icon chk-panel-icon--ship">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+                  </svg>
+                </div>
+                <h2 className="chk-panel-title">Shipping Address</h2>
               </div>
-            )}
 
-            <hr className="summary-divider" />
+              <div className="chk-fields">
+                <div className="chk-field-row">
+                  <div className="chk-field">
+                    <label className="chk-label" htmlFor="fullName">Full Name</label>
+                    <input
+                      className="chk-input"
+                      type="text"
+                      id="fullName"
+                      name="fullName"
+                      value={shippingAddress.fullName}
+                      onChange={handleAddressChange}
+                      placeholder="John Doe"
+                      required
+                    />
+                  </div>
+                  <div className="chk-field">
+                    <label className="chk-label" htmlFor="phone">Phone Number</label>
+                    <input
+                      className="chk-input"
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      value={shippingAddress.phone}
+                      onChange={handleAddressChange}
+                      placeholder="+1 555 000 0000"
+                      required
+                    />
+                  </div>
+                </div>
 
-            <div className="summary-item total-row">
-              <span>Order Total:</span>
-              <span className="final-price">${(totalAmount + shippingFee).toFixed(2)}</span>
+                <div className="chk-field">
+                  <label className="chk-label" htmlFor="city">City</label>
+                  <input
+                    className="chk-input"
+                    type="text"
+                    id="city"
+                    name="city"
+                    value={shippingAddress.city}
+                    onChange={handleAddressChange}
+                    placeholder="Cairo"
+                    required
+                  />
+                </div>
+
+                <div className="chk-field">
+                  <label className="chk-label" htmlFor="details">
+                    Street Address
+                    <span className="chk-label-hint"> (street, building, floor)</span>
+                  </label>
+                  <textarea
+                    className="chk-input chk-textarea"
+                    id="details"
+                    name="details"
+                    value={shippingAddress.details}
+                    onChange={handleAddressChange}
+                    placeholder="123 Main St, Building 4, Floor 2"
+                    required
+                    rows="3"
+                  />
+                  {shippingFee > 0 && (
+                    <span className="chk-field-success">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+                      Address saved — $50 flat shipping applied
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* ── Payment details ── */}
+            <div className="chk-panel">
+              <div className="chk-panel-header">
+                <div className="chk-panel-icon chk-panel-icon--pay">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/>
+                  </svg>
+                </div>
+                <h2 className="chk-panel-title">Payment Details</h2>
+              </div>
+
+              <div className="chk-fields">
+                <div className="chk-field">
+                  <label className="chk-label" htmlFor="cardName">Cardholder Name</label>
+                  <input
+                    className="chk-input"
+                    type="text"
+                    id="cardName"
+                    value={cardName}
+                    onChange={(e) => setCardName(e.target.value)}
+                    placeholder="John Doe"
+                    required
+                  />
+                </div>
+
+                <div className="chk-field">
+                  <label className="chk-label" htmlFor="cardNumber">Card Number</label>
+                  <div className="chk-input-icon-wrap">
+                    <svg className="chk-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                    <input
+                      className="chk-input chk-input--icon"
+                      type="text"
+                      id="cardNumber"
+                      value={cardNumber}
+                      onChange={(e) =>
+                        setCardNumber(e.target.value.replace(/\s/g, "").slice(0, 16))
+                      }
+                      placeholder="XXXX XXXX XXXX XXXX"
+                      required
+                      maxLength="16"
+                    />
+                  </div>
+                </div>
+
+                <div className="chk-field-row">
+                  <div className="chk-field">
+                    <label className="chk-label" htmlFor="expiryDate">Expiry Date</label>
+                    <input
+                      className="chk-input"
+                      type="text"
+                      id="expiryDate"
+                      value={expiryDate}
+                      onChange={handleExpiryDateChange}
+                      placeholder="MM/YY"
+                      required
+                      maxLength="5"
+                    />
+                  </div>
+                  <div className="chk-field">
+                    <label className="chk-label" htmlFor="cvv">
+                      CVV
+                      <span className="chk-label-hint"> (3 digits)</span>
+                    </label>
+                    <input
+                      className="chk-input"
+                      type="text"
+                      id="cvv"
+                      value={cvv}
+                      onChange={(e) =>
+                        setCvv(e.target.value.replace(/[^0-9]/g, "").slice(0, 3))
+                      }
+                      placeholder="XXX"
+                      required
+                      maxLength="3"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>{/* end chk-form-col */}
+
+          {/* ════════════════════════════
+              RIGHT — Sticky order summary
+          ════════════════════════════ */}
+          <div className="chk-summary-col">
+            <div className="chk-summary-panel">
+
+              <p className="chk-summary-eyebrow">Order Summary</p>
+
+              {/* Item list */}
+              <div className="chk-summary-items">
+                {summaryItems.map((item, i) => (
+                  <div key={i} className="chk-summary-item">
+                    <span className="chk-summary-item-name">
+                      {item.title}
+                      {item.quantity > 1 && (
+                        <span className="chk-summary-item-qty"> ×{item.quantity}</span>
+                      )}
+                    </span>
+                    <span className="chk-summary-item-price">
+                      ${Math.round(item.price * item.quantity)}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="chk-summary-divider" />
+
+              {/* Subtotal */}
+              <div className="chk-summary-row">
+                <span>Subtotal</span>
+                <span>${totalAmount.toFixed(2)}</span>
+              </div>
+
+              {/* Shipping */}
+              <div className={`chk-summary-row ${shippingFee > 0 ? "chk-summary-row--ship" : ""}`}>
+                <span>Shipping</span>
+                {shippingFee > 0 ? (
+                  <span>${shippingFee.toFixed(2)}</span>
+                ) : (
+                  <span className="chk-summary-tbd">Enter address</span>
+                )}
+              </div>
+
+              <div className="chk-summary-divider chk-summary-divider--bold" />
+
+              {/* Total */}
+              <div className="chk-summary-total">
+                <span>Total</span>
+                <span className="chk-summary-total-value">
+                  ${(totalAmount + shippingFee).toFixed(2)}
+                </span>
+              </div>
+
+              {/* Pay button */}
+              <button
+                type="submit"
+                className="chk-pay-btn"
+                disabled={paymentProcessing || shippingFee === 0}
+              >
+                {paymentProcessing ? (
+                  <>
+                    <div className="chk-btn-spinner" />
+                    Processing…
+                  </>
+                ) : (
+                  <>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>
+                    </svg>
+                    Pay ${(totalAmount + shippingFee).toFixed(2)}
+                  </>
+                )}
+              </button>
+
+              {shippingFee === 0 && (
+                <p className="chk-address-hint">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  Enter a valid address to enable payment
+                </p>
+              )}
+
+              {/* Security note */}
+              <p className="chk-secure-note">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                Secured · Encrypted · 256-bit SSL
+              </p>
+
             </div>
           </div>
 
-          <button
-            type="submit"
-            className="submit-payment-btn"
-            disabled={paymentProcessing || (shippingFee === 0)} // منع الدفع لو مفيش عنوان
-          >
-            {paymentProcessing ? "Processing..." : `Pay $${(totalAmount + shippingFee).toFixed(2)} Now`}
-          </button>
-          
-          {shippingFee === 0 && (
-            <p className="address-hint">* Please enter a valid address to calculate shipping</p>
-          )}
-        </div>
-
-        {/* <button
-          type="submit"
-          className="submit-payment-btn"
-          disabled={paymentProcessing}
-          style={{ marginTop: '20px' }}
-        >
-          {paymentProcessing ? "Processing..." : `Pay $${totalAmount.toFixed(2)} Now`}
-        </button> */}
-      </form>
+        </form>
+      </div>
     </div>
   );
 };

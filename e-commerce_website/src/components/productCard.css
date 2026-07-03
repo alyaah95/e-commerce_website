@@ -1,45 +1,152 @@
+/* ============================================================
+   productCard.css — SaaS-grade card UI
+   Works alongside Bootstrap 5 + React-Bootstrap 2.10
+   ============================================================ */
+
+/* ── Variables ────────────────────────────────────────────────── */
+:root {
+    --pc-primary: #0d6efd;
+    --pc-primary-dark: #0a58ca;
+    --pc-surface: #ffffff;
+    --pc-border: #e9ecef;
+    --pc-text: #212529;
+    --pc-text-muted: #6c757d;
+    --pc-radius: 14px;
+    --pc-shadow-rest: 0 2px 8px rgba(0, 0, 0, 0.07);
+    --pc-shadow-hover: 0 12px 32px rgba(0, 0, 0, 0.13);
+    --pc-transition: all 0.3s ease-in-out;
+}
+
+/* ── Card Shell ──────────────────────────────────────────────── */
 .product-card {
-    transition: all 0.3s ease;
+    border-radius: var(--pc-radius) !important;
     overflow: hidden;
     cursor: pointer;
-    position: relative;
+    background: var(--pc-surface);
+    transition: var(--pc-transition);
+    box-shadow: var(--pc-shadow-rest) !important;
 }
 
 .product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    transform: translateY(-6px);
+    box-shadow: var(--pc-shadow-hover) !important;
 }
 
-.product-image {
-    transition: all 0.5s ease;
-    height: 300px;
-    object-fit: cover;
+/* ── Image Wrapper ───────────────────────────────────────────── */
+.product-card__image-wrap {
+    background: #f8f9fa;
+    overflow: hidden;
+    border-bottom: 1px solid var(--pc-border);
 }
 
-.product-card:hover .product-image {
-    transform: scale(1.05);
+/* ── Product Image ───────────────────────────────────────────── */
+.product-card__img {
+    transition: transform 0.4s ease-in-out;
+    width: 100%;
+    padding: 1rem;
 }
 
-.badge-custom {
+.product-card:hover .product-card__img {
+    transform: scale(1.06);
+}
+
+/* ── Stock Badge ─────────────────────────────────────────────── */
+.product-card__badge {
     position: absolute;
     top: 10px;
-    right: 10px;
+    left: 10px;
+    z-index: 2;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* ── Wishlist Button Position ────────────────────────────────── */
+.product-card__wishlist {
+    position: absolute;
+    top: 8px;
+    right: 8px;
     z-index: 2;
 }
 
-.price {
-    font-size: 1.5rem;
+/* ── Title ───────────────────────────────────────────────────── */
+.product-card__title {
+    font-size: 0.92rem;
+    line-height: 1.4;
+    color: var(--pc-text);
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ── Description ─────────────────────────────────────────────── */
+.product-card__desc {
+    font-size: 0.82rem;
+    line-height: 1.5;
+}
+
+/* ── Price ───────────────────────────────────────────────────── */
+.product-card__price {
+    font-size: 1.15rem;
+    color: var(--pc-primary-dark);
+    letter-spacing: -0.3px;
+}
+
+/* ── Details Button ──────────────────────────────────────────── */
+.product-card__details-btn {
+    border-radius: 8px;
+    font-size: 0.78rem;
     font-weight: 600;
-    color: #2c3e50;
+    padding: 0.3rem 0.85rem;
+    letter-spacing: 0.2px;
+    border-width: 1.5px;
+    transition: var(--pc-transition);
 }
 
-.btn-custom {
-    background: linear-gradient(45deg, #3498db, #2ecc71);
+.product-card__details-btn:hover {
+    background: var(--pc-text);
+    color: #fff;
+    border-color: var(--pc-text);
+    transform: translateY(-1px);
+}
+
+/* ── Add to Cart Button ──────────────────────────────────────── */
+.product-card__cart-btn {
+    border-radius: 9px;
+    font-size: 0.84rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    padding: 0.45rem;
+    transition: var(--pc-transition);
     border: none;
-    transition: all 0.3s ease;
 }
 
-.btn-custom:hover {
-    transform: translateX(5px);
-    box-shadow: -5px 5px 15px rgba(46, 204, 113, 0.3);
+.product-card__cart-btn.btn-primary:hover:not(:disabled) {
+    background: var(--pc-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(13, 110, 253, 0.35);
+}
+
+.product-card__cart-btn.btn-secondary {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* ── Footer separator ────────────────────────────────────────── */
+.product-card__footer {
+    border-top: 1px solid var(--pc-border);
+    padding-top: 0.75rem;
+}
+
+/* ── Focus visible for accessibility ─────────────────────────── */
+.product-card__cart-btn:focus-visible,
+.product-card__details-btn:focus-visible {
+    outline: 3px solid rgba(13, 110, 253, 0.4);
+    outline-offset: 2px;
 }
