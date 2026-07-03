@@ -4,7 +4,7 @@ import axiosInstance from '../apis/config';
 import api from '../apis/axiosConfig';
 import { useSelector } from 'react-redux'; 
 import { Link } from "react-router"; 
-import "./ProductList.css";
+import './productList.css';
 
 const ProductList = () => {
   const [allProducts, setAllProducts] = useState([]);
