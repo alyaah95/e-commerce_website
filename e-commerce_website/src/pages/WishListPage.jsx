@@ -31,6 +31,8 @@ const WishlistPage = () => {
         });
   };
 
+  const isOutOfStock = product.stock <= 0;
+
   return (
     <div className="wl-page">
       <div className="wl-container">
@@ -106,6 +108,7 @@ const WishlistPage = () => {
                     <div className="wl-card-actions">
                       <button
                         className= {`btn btn-sm wl-cart-btn ${!isAuthenticated || product.stock <= 0  ? 'btn-secondary' : 'btn-primary'}`}
+                        disabled={!isAuthenticated || isOutOfStock}
                         onClick={() => handleAddToCart(product)}
                       >
                         
