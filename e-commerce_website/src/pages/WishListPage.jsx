@@ -31,7 +31,9 @@ const WishlistPage = () => {
         });
   };
 
-  const isOutOfStock = product.stock <= 0;
+  const isOutOfStock = (product) => {
+    return product.stock <= 0;
+  }
 
   return (
     <div className="wl-page">
@@ -108,7 +110,7 @@ const WishlistPage = () => {
                     <div className="wl-card-actions">
                       <button
                         className= {`btn btn-sm wl-cart-btn ${!isAuthenticated || product.stock <= 0  ? 'btn-secondary' : 'btn-primary'}`}
-                        disabled={!isAuthenticated || isOutOfStock}
+                        disabled={!isAuthenticated || isOutOfStock(product)}
                         onClick={() => handleAddToCart(product)}
                       >
                         
@@ -118,7 +120,7 @@ const WishlistPage = () => {
                         </svg>
                         {!isAuthenticated
                           ? '🔒 Login to Add'
-                          : isOutOfStock
+                          : isOutOfStock(product)
                           ? 'Out of Stock'
                           : '+ Add to Cart'}
                       </button>
