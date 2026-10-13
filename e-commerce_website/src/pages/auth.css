@@ -1,12 +1,6 @@
-/* ============================================================
-   auth.css  —  Shared Login & Register Styles
-   One file imported by both pages.
-   Fully consistent with site design system:
-   Same tokens as Checkout / Cart / Profile / Orders
-   Bootstrap 5 compatible — all classes prefixed .auth-*
-   ============================================================ */
 
-/* ── Variables ─────────────────────────────────────────────── */
+
+/* Variables */
 :root {
     --auth-primary: #0d6efd;
     --auth-primary-dark: #0a58ca;
@@ -36,10 +30,10 @@
     --auth-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/*
    PAGE SHELL
    Full-viewport centred layout — same #f4f6fb bg as every page
-═══════════════════════════════════════════════════════════════ */
+ */
 .auth-page {
     background: var(--auth-bg);
     min-height: 100vh;
@@ -49,9 +43,9 @@
     padding: 2rem 1rem;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/*
    AUTH CARD
-═══════════════════════════════════════════════════════════════ */
+ */
 .auth-card {
     background: var(--auth-surface);
     border-radius: var(--auth-radius-xl);
@@ -79,7 +73,7 @@
     }
 }
 
-/* ── Brand mark ── */
+/*  Brand mark  */
 .auth-brand {
     display: flex;
     align-items: center;
@@ -106,7 +100,7 @@
     letter-spacing: -0.3px;
 }
 
-/* ── Heading ── */
+/* Heading  */
 .auth-title {
     font-size: 1.6rem;
     font-weight: 800;
@@ -121,10 +115,10 @@
     margin: 0 0 1.5rem;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* 
    ALERT BANNER (server / submission errors)
    Same pattern as Profile.css / CheckoutPage.css alerts
-═══════════════════════════════════════════════════════════════ */
+ */
 .auth-alert {
     display: flex;
     align-items: center;
@@ -166,9 +160,9 @@
     flex-shrink: 0;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* 
    FORM
-═══════════════════════════════════════════════════════════════ */
+ */
 .auth-form {
     display: flex;
     flex-direction: column;
@@ -234,7 +228,7 @@
     /* vertically centred by flex parent */
 }
 
-/* ── Input itself ── */
+/*  Input itself  */
 .auth-input {
     width: 100%;
     padding: 0.65rem 0.9rem 0.65rem 2.4rem;
@@ -280,7 +274,7 @@
     box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.12) !important;
 }
 
-/* ── Eye / show-password toggle button ── */
+/*  Eye / show-password toggle button  */
 .auth-eye-btn {
     position: absolute;
     right: 0.75rem;
@@ -298,11 +292,11 @@
     color: var(--auth-primary);
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* 
    INLINE FIELD ERROR
    Identical style used in both Login and Register.
    Small, icon-led, danger red — consistent with Profile.css
-═══════════════════════════════════════════════════════════════ */
+ */
 .auth-field-error {
     display: flex;
     align-items: center;
@@ -318,10 +312,10 @@
     flex-shrink: 0;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* 
    SUBMIT BUTTON
    Same primary pill pattern as Checkout / Cart CTA buttons
-═══════════════════════════════════════════════════════════════ */
+*/
 .auth-submit-btn {
     width: 100%;
     display: flex;
@@ -380,10 +374,10 @@
     }
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/*
    FOOTER SWITCH LINK
    "Don't have an account? Create one now" / "Already have one?"
-═══════════════════════════════════════════════════════════════ */
+ */
 .auth-switch {
     text-align: center;
     font-size: 0.85rem;
@@ -403,9 +397,9 @@
     text-decoration: underline;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/*
    DIVIDER (optional — available for both pages)
-═══════════════════════════════════════════════════════════════ */
+ */
 .auth-divider {
     display: flex;
     align-items: center;
@@ -423,9 +417,9 @@
     background: var(--auth-border);
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* 
    RESPONSIVE
-═══════════════════════════════════════════════════════════════ */
+ */
 
 /* Collapse two-column field rows on narrow screens */
 @media (max-width: 520px) {

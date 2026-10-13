@@ -13,11 +13,9 @@ const runCartCleanup = async () => {
   }
 };
 
-// دالة تانية بتجهز الـ cron وتخليه مستعد
 const startCleanupCron = () => {
   cron.schedule('0 * * * *', runCartCleanup);
   console.log('Cart cleanup Cron Job scheduled successfully (Every hour).');
 };
 
-// بنعمل Export للاتنين عشان نتحكم في وقت تشغيلهم بالظبط
 module.exports = { runCartCleanup, startCleanupCron };

@@ -7,13 +7,13 @@ const Footer = () => {
     <footer className="footer">
       <div className="footer-container">
         <div className="footer-row">
-          {/* القسم الأول: اسم البراند */}
+
           <div className="footer-col">
             <h4 className="footer-logo">MyCart Bliss</h4>
             <p>Your one-stop shop for all your needs. Quality and speed guaranteed.</p>
           </div>
 
-          {/* القسم الثاني: روابط سريعة */}
+
           <div className="footer-col">
             <h5>Quick Links</h5>
             <ul>
@@ -23,7 +23,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* القسم الثالث: التواصل معنا (Contact Us) الجديد */}
+
           <div className="footer-col">
             <h5>Contact Us</h5>
             <ul className="contact-info">
@@ -42,7 +42,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* القسم الثالث: السوشيال ميديا */}
+
           <div className="footer-col">
             <h5>Follow Us</h5>
             <div className="social-links">

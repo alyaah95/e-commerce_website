@@ -9,7 +9,6 @@ const Profile = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    /* ── All state & logic — completely untouched ── */
     const { user, loading, error, isAuthenticated } = useSelector((state) => state.auth);
     const [passwordSuccessMsg, setPasswordSuccessMsg] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
@@ -128,9 +127,9 @@ const Profile = () => {
 
                 <div className="prf-layout">
 
-                    {/* ══════════════════════════════
+                    {/* 
                         LEFT — Avatar card
-                    ══════════════════════════════ */}
+                     */}
                     <aside className="prf-sidebar">
                         <div className="prf-avatar-card">
                             <div className="prf-avatar">{initials}</div>
@@ -161,9 +160,9 @@ const Profile = () => {
                         </div>
                     </aside>
 
-                    {/* ══════════════════════════════
+                    {/* 
                         RIGHT — Info / Edit panels
-                    ══════════════════════════════ */}
+                     */}
                     <div className="prf-main">
 
                         {/* Global submission error */}
@@ -187,7 +186,7 @@ const Profile = () => {
                         )}
 
                         {isEditing ? (
-                            /* ══ EDIT MODE ══ */
+                            /*  EDIT MODE  */
                             <>
                                 {/* Basic info form */}
                                 <div className="prf-panel">
@@ -297,7 +296,7 @@ const Profile = () => {
                             </>
 
                         ) : (
-                            /* ══ READ-ONLY MODE ══ */
+                            /*  READ-ONLY MODE  */
                             <div className="prf-panel">
                                 <div className="prf-panel-header">
                                     <div className="prf-panel-icon prf-panel-icon--info">

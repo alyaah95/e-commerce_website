@@ -13,7 +13,7 @@ const CheckoutPage = () => {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  /* ── All state & logic — completely untouched ── */
+  /*  All state & logic — completely untouched  */
   const entireCartProducts = useSelector((state) => state.productCart.products);
   const { productId, quantity, totalAmount: passedTotalAmount, isEntireCart, isSingleProduct } = location.state || {};
   const totalAmount = isEntireCart
@@ -110,7 +110,7 @@ const CheckoutPage = () => {
     setExpiryDate(value);
   };
 
-  /* ── Loading / guard states ── */
+  /*  Loading / guard states  */
   if (isSingleProduct && (!productId || !quantity)) {
     return (
       <div className="chk-fullscreen-center">
@@ -136,7 +136,7 @@ const CheckoutPage = () => {
     );
   }
 
-  /* ── Derived display values ── */
+  /*  Derived display values  */
   const itemCount = isEntireCart ? entireCartProducts.length : quantity;
   const summaryItems = isEntireCart
     ? entireCartProducts
@@ -146,7 +146,7 @@ const CheckoutPage = () => {
     <div className="chk-page">
       <div className="chk-container">
 
-        {/* ── Page Header ── */}
+        {/*  Page Header  */}
         <div className="chk-page-header">
           <h1 className="chk-page-title">Checkout</h1>
           <p className="chk-page-sub">
@@ -156,12 +156,12 @@ const CheckoutPage = () => {
           </p>
         </div>
 
-        {/* ── Two-column layout ── */}
+        {/*  Two-column layout  */}
         <form onSubmit={handlePaymentSubmit} className="chk-layout">
 
-          {/* ════════════════════════════
+          {/* 
               LEFT — Form panels
-          ════════════════════════════ */}
+           */}
           <div className="chk-form-col">
 
             {/* ── Shipping address ── */}
@@ -244,7 +244,7 @@ const CheckoutPage = () => {
               </div>
             </div>
 
-            {/* ── Payment details ── */}
+            {/*  Payment details  */}
             <div className="chk-panel">
               <div className="chk-panel-header">
                 <div className="chk-panel-icon chk-panel-icon--pay">
@@ -326,9 +326,9 @@ const CheckoutPage = () => {
 
           </div>{/* end chk-form-col */}
 
-          {/* ════════════════════════════
+          {/* 
               RIGHT — Sticky order summary
-          ════════════════════════════ */}
+           */}
           <div className="chk-summary-col">
             <div className="chk-summary-panel">
 

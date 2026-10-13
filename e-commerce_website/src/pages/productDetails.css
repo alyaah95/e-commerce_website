@@ -1,12 +1,6 @@
-/* ============================================================
-   productDetails.css  —  Premium Product Details Redesign
-   Consistent with site design system:
-   Same tokens as Cart / Checkout / Profile / Orders / Wishlist
-   Bootstrap 5 compatible — no class conflicts
-   Reviews CSS at the bottom kept exactly as original.
-   ============================================================ */
 
-/* ── Variables ─────────────────────────────────────────────── */
+
+/*  Variables  */
 :root {
     --pd-primary: #0d6efd;
     --pd-primary-dark: #0a58ca;
@@ -39,7 +33,7 @@
     --pd-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ── Page shell ──────────────────────────────────────────────── */
+/*  Page shell  */
 .pd-page {
     background: var(--pd-bg);
     min-height: 100vh;
@@ -51,9 +45,9 @@
     margin: 0 auto;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* 
    LOADING STATE
-═══════════════════════════════════════════════════════════════ */
+ */
 .pd-fullscreen-center {
     display: flex;
     flex-direction: column;
@@ -85,9 +79,9 @@
     }
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* 
    PRODUCT GRID LAYOUT
-═══════════════════════════════════════════════════════════════ */
+ */
 .pd-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -99,9 +93,9 @@
     margin-bottom: 2.5rem;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* 
    IMAGE GALLERY (left column)
-═══════════════════════════════════════════════════════════════ */
+ */
 .pd-gallery {
     display: flex;
     flex-direction: column;
@@ -174,9 +168,9 @@
     padding: 6px;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* 
    PRODUCT INFO (right column)
-═══════════════════════════════════════════════════════════════ */
+ */
 .pd-info {
     display: flex;
     flex-direction: column;
@@ -407,7 +401,7 @@
     }
 }
 
-/* ── Quantity controls ── */
+/*  Quantity controls  */
 .pd-qty-row {
     display: flex;
     align-items: center;
@@ -466,7 +460,7 @@
     margin: 0;
 }
 
-/* ── CTA action buttons ── */
+/*  CTA action buttons  */
 .pd-actions {
     display: flex;
     gap: 0.75rem;
@@ -542,10 +536,10 @@
     outline-offset: 2px;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* 
    TRUST BADGES (Warranty / Returns / Shipping)
    Three-column card grid — fully responsive
-═══════════════════════════════════════════════════════════════ */
+ */
 .pd-trust-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -617,10 +611,10 @@
     line-height: 1.35;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* 
    REVIEWS SECTION — kept exactly as original
    Only the outer wrapper sits on the new page background.
-═══════════════════════════════════════════════════════════════ */
+ */
 .product-reviews-wrapper {
     background: var(--pd-surface);
     border-radius: var(--pd-radius-xl);
@@ -680,9 +674,9 @@
     margin-right: 2px;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* 
    RESPONSIVE
-═══════════════════════════════════════════════════════════════ */
+ */
 
 /* Tablet */
 @media (max-width: 900px) {

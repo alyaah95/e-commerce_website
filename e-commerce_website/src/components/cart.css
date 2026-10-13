@@ -1,11 +1,11 @@
-/* ============================================================
+/* 
    cart.css  —  Premium Cart Redesign
    Consistent with site design system:
    Same tokens as OrderTrackingPage / WishlistPage / ProductCard
    Bootstrap 5 compatible — no class conflicts
-   ============================================================ */
+  */
 
-/* ── Variables ─────────────────────────────────────────────── */
+/* Variables */
 :root {
     --ct-primary: #0d6efd;
     --ct-primary-dark: #0a58ca;
@@ -38,7 +38,7 @@
     --ct-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ── Page shell ──────────────────────────────────────────────── */
+/*  Page shell*/
 .cart-page {
     background: var(--ct-bg);
     min-height: 100vh;
@@ -50,9 +50,9 @@
     margin: 0 auto;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* 
    PAGE HEADER
-═══════════════════════════════════════════════════════════════ */
+ */
 .cart-header {
     display: flex;
     align-items: center;
@@ -105,9 +105,9 @@
     color: var(--ct-text-faint);
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* 
    RESERVATION BANNER
-═══════════════════════════════════════════════════════════════ */
+*/
 .cart-banner {
     display: flex;
     align-items: center;
@@ -143,9 +143,9 @@
     color: #1e3a8a;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* 
    MAIN LAYOUT — items panel + summary sidebar
-═══════════════════════════════════════════════════════════════ */
+*/
 .cart-layout {
     display: grid;
     grid-template-columns: 1fr 300px;
@@ -153,9 +153,9 @@
     align-items: start;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* 
    ITEMS PANEL
-═══════════════════════════════════════════════════════════════ */
+ */
 .cart-items-panel {
     background: var(--ct-surface);
     border-radius: var(--ct-radius-xl);
@@ -178,7 +178,7 @@
     color: var(--ct-text-faint);
 }
 
-/* ── Item row ── */
+/*  Item row  */
 .cart-item-row {
     display: grid;
     grid-template-columns: 2fr 1.2fr 0.9fr 1fr;
@@ -378,9 +378,9 @@
     box-shadow: 0 4px 12px rgba(220, 53, 69, 0.22);
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/*
    ORDER SUMMARY SIDEBAR
-═══════════════════════════════════════════════════════════════ */
+*/
 .cart-summary-panel {
     background: var(--ct-surface);
     border-radius: var(--ct-radius-xl);
@@ -524,9 +524,9 @@
     margin: 0;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/*
    RESPONSIVE
-═══════════════════════════════════════════════════════════════ */
+*/
 
 /* Tablet — stack summary below items */
 @media (max-width: 900px) {

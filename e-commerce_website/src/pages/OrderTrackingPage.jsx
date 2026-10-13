@@ -11,7 +11,7 @@ const CONTACT_INFO = {
     // whatsapp: '+20 555 777 9877'
 };
 
-/* ── Status config helper ────────────────────────────────────── */
+/*  Status config helper  */
 const getStatusConfig = (status) => {
     switch (status) {
         case 'Delivered':
@@ -39,7 +39,7 @@ const getStatusConfig = (status) => {
     }
 };
 
-/* ── Page Component ──────────────────────────────────────────── */
+/*  Page Component  */
 const OrderTrackingPage = () => {
     const dispatch = useDispatch();
     const { ordersList, currentOrderDetails, loading, error } = useSelector(state => state.order);
@@ -78,12 +78,12 @@ const OrderTrackingPage = () => {
         });
     };
 
-    /* ── Derived stats (presentation only, computed from existing data) ── */
+    /*  Derived stats (presentation only, computed from existing data)  */
     const totalOrders    = ordersList.length;
     const inProgress     = ordersList.filter(o => o.status === 'Processing' || o.status === 'Out for Delivery').length;
     const completed      = ordersList.filter(o => o.status === 'Delivered').length;
 
-    /* ── Loading ── */
+    /*  Loading  */
     if (loading === 'pending' && ordersList.length === 0) {
         return (
             <div className="otp-fullscreen-center">
@@ -93,7 +93,7 @@ const OrderTrackingPage = () => {
         );
     }
 
-    /* ── Error ── */
+    /*  Error  */
     if (error && ordersList.length === 0) {
         return (
             <div className="otp-fullscreen-center">
@@ -112,9 +112,9 @@ const OrderTrackingPage = () => {
         <div className="otp-page">
             <div className="otp-container">
 
-                {/* ══════════════════════════════════════
+                {/* 
                     HERO HEADER
-                ══════════════════════════════════════ */}
+                 */}
                 <div className="otp-hero">
                     <div className="otp-hero-text">
                         <h1 className="otp-hero-title">My Orders</h1>
@@ -155,9 +155,9 @@ const OrderTrackingPage = () => {
                     )}
                 </div>
 
-                {/* ══════════════════════════════════════
+                {/* 
                     EMPTY STATE
-                ══════════════════════════════════════ */}
+                 */}
                 {ordersList.length === 0 ? (
                     <div className="otp-empty-state">
                         <div className="otp-empty-icon">
@@ -168,9 +168,9 @@ const OrderTrackingPage = () => {
                     </div>
                 ) : (
 
-                /* ══════════════════════════════════════
+                /* 
                     ORDER LIST
-                ══════════════════════════════════════ */
+                 */
                     <div className="otp-list">
                         {ordersList.map((order) => {
                             const cfg   = getStatusConfig(order.status);
@@ -250,9 +250,9 @@ const OrderTrackingPage = () => {
                     </div>
                 )}
 
-                {/* ══════════════════════════════════════
+                {/* 
                     HELP BAR
-                ══════════════════════════════════════ */}
+                 */}
                 <div className="otp-help-bar">
                     <div className="otp-help-inner">
                         <div className="otp-help-text">
@@ -278,7 +278,7 @@ const OrderTrackingPage = () => {
 };
 
 
-/* ═══════════════════════════════════════════════════════════════
+/* 
    InvoiceModal
    ─ Rendered via ReactDOM.createPortal directly into document.body
      so it escapes every stacking context (overflow:hidden, z-index,
@@ -286,7 +286,7 @@ const OrderTrackingPage = () => {
    ─ window.print() fires on the live page; @media print makes
      everything invisible except .inv-printable.
    ─ No window.open(), no blank tabs, no stray windows ever.
-═══════════════════════════════════════════════════════════════ */
+ */
 const InvoiceModal = ({ details, onClose }) => {
     const shippingAddress = details.shipping_address;
     const printDate = new Date().toLocaleDateString('en-US', {
@@ -313,11 +313,11 @@ const InvoiceModal = ({ details, onClose }) => {
         return () => { document.body.style.overflow = ''; };
     }, []);
 
-    /* ── Portal render: mounts directly on document.body ────────
+    /*  Portal render: mounts directly on document.body 
        This escapes every ancestor's overflow/transform/z-index
        stacking context, which is the root cause of @media print
        rescue rules silently failing in Chrome/Safari/Edge.
-    ─────────────────────────────────────────────────────────── */
+     */
     return ReactDOM.createPortal(
         <div className="inv-backdrop" onClick={handleBackdropClick}>
             <div className="inv-modal" role="dialog" aria-modal="true" aria-label={`Invoice for Order #${details.id}`}>
@@ -342,7 +342,7 @@ const InvoiceModal = ({ details, onClose }) => {
                     </div>
                 </div>
 
-                {/* ── Printable receipt area ── */}
+                {/*  Printable receipt area  */}
                 <div className="inv-printable">
 
                     {/* Header */}
@@ -446,9 +446,9 @@ const InvoiceModal = ({ details, onClose }) => {
 };
 
 
-/* ═══════════════════════════════════════════════════════════════
+/* 
    OrderDetailsCard — logic untouched
-═══════════════════════════════════════════════════════════════ */
+ */
 const OrderDetailsCard = ({ details, isLoading, contactInfo }) => {
 
     const [showInvoice, setShowInvoice] = useState(false);
@@ -496,7 +496,7 @@ const OrderDetailsCard = ({ details, isLoading, contactInfo }) => {
 
     return (
         <>
-        {/* ── Invoice Modal (portal-style, rendered above everything) ── */}
+        {/*  Invoice Modal (portal-style, rendered above everything)  */}
         {showInvoice && (
             <InvoiceModal
                 details={details}
@@ -506,7 +506,7 @@ const OrderDetailsCard = ({ details, isLoading, contactInfo }) => {
 
         <div className="otp-details">
 
-            {/* ── Vertical Stepper ── */}
+            {/*  Vertical Stepper  */}
             {!isSpecialStatus && (
                 <div className="otp-stepper-wrap">
                     <p className="otp-eyebrow">Delivery Progress</p>
@@ -539,7 +539,7 @@ const OrderDetailsCard = ({ details, isLoading, contactInfo }) => {
                 </div>
             )}
 
-            {/* ── Cancelled / Returned banner ── */}
+            {/*  Cancelled / Returned banner  */}
             {isSpecialStatus && (
                 <div className="otp-alert">
                     <div className="otp-alert-icon">
@@ -552,7 +552,7 @@ const OrderDetailsCard = ({ details, isLoading, contactInfo }) => {
                 </div>
             )}
 
-            {/* ── Body: Items + Summary ── */}
+            {/*  Body: Items + Summary  */}
             <div className="otp-body-grid">
 
                 {/* Mini Product Cards */}

@@ -1,11 +1,4 @@
-// ProductCard.jsx  —  FIXED
-// Changes:
-//   FIX 3: product id compared as Number so Redux lookup never returns undefined
-//          when the store holds numeric ids and the prop is a string (or vice
-//          versa).
-//   FIX 4: "Add to Cart" always sends quantity: 1 — it is an incremental add,
-//          not a setter.  The backend accumulates (quantity + 1) correctly.
-//          No local counter is needed here because the card only has one CTA.
+
 
 import { useNavigate } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
@@ -17,7 +10,6 @@ import './wishlistButton.css';
 
 const ProductCard = ({ data }) => {
   const productsFromStore = useSelector((state) => state.productCart.products);
-  // FIX 3: compare as Number so the lookup is never broken by a type mismatch
   const productFromStore = productsFromStore.find(
     (p) => p.id === Number(data?.id)
   );
@@ -38,7 +30,6 @@ const ProductCard = ({ data }) => {
       return;
     }
 
-    // FIX 4: always add 1; the backend does quantity + 1 on its own
     dispatch(
       addProductToCartBackend({
         id: data.id,

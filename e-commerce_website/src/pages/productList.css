@@ -1,9 +1,6 @@
-/* ============================================================
-   ProductList.css — SaaS-grade UI polish
-   Works alongside Bootstrap 5 + React-Bootstrap 2.10
-   ============================================================ */
 
-/* ── CSS Variables ─────────────────────────────────────────── */
+
+/*  CSS Variables  */
 :root {
     --pl-primary: #0d6efd;
     --pl-primary-dark: #0a58ca;
@@ -20,12 +17,12 @@
     --pl-transition: all 0.3s ease-in-out;
 }
 
-/* ── Wrapper ────────────────────────────────────────────────── */
+/*  Wrapper  */
 .product-list-wrapper {
     max-width: 1400px;
 }
 
-/* ── Page Header ─────────────────────────────────────────────── */
+/*  Page Header  */
 .store-heading {
     font-size: clamp(1.6rem, 4vw, 2.4rem);
     color: var(--pl-text);
@@ -38,7 +35,7 @@
     margin: 0 auto;
 }
 
-/* ── Guest Banner ────────────────────────────────────────────── */
+/*  Guest Banner  */
 .guest-banner {
     background: linear-gradient(135deg, #e7f0ff 0%, #f0fff4 100%);
     border: 1px solid var(--pl-border);
@@ -63,7 +60,7 @@
     box-shadow: 0 4px 12px rgba(13, 110, 253, 0.25);
 }
 
-/* ── Filter Bar ──────────────────────────────────────────────── */
+/*  Filter Bar  */
 .filter-bar {
     background: var(--pl-surface);
     border: 1px solid var(--pl-border);
@@ -162,7 +159,7 @@
     text-align: center;
 }
 
-/* ── Empty State ──────────────────────────────────────────────── */
+/*  Empty State  */
 .empty-state-container {
     min-height: 40vh;
     display: flex;
@@ -191,7 +188,7 @@
     line-height: 1;
 }
 
-/* ── Pagination ───────────────────────────────────────────────── */
+/*  Pagination  */
 .pagination-btn {
     border-radius: 10px;
     padding: 0.5rem 1.4rem;
@@ -227,7 +224,7 @@
     color: var(--pl-text);
 }
 
-/* ── Responsive Tweaks ────────────────────────────────────────── */
+/*  Responsive Tweaks  */
 @media (max-width: 576px) {
     .filter-bar {
         padding: 1rem !important;

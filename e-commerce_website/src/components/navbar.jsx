@@ -53,7 +53,7 @@ const Navbar = () => {
           <div className="navbar-auth">
           {isAuthenticated ? (
               <>
-                {/* 1. ✅ رابط صفحة البروفايل */}
+
                 <li className="nav-item profile-link" style={{ listStyle: 'none' }}>
                     <Link to="/profile" className="nav-link" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
                         <FaUserCircle style={iconStyle} />
@@ -61,7 +61,7 @@ const Navbar = () => {
                     </Link>
                 </li>
                 
-                {/* 2. ✅ زر تسجيل الخروج */}
+
                 <li className="nav-item" style={{ listStyle: 'none' }}>
                     <button
                         className="nav-link btn btn-link" 

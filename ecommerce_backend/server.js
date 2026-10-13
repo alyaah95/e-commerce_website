@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 5000;
 
 
 app.use(cors({
-  origin: '*', // مؤقتاً لحد ما ترفعي الفرونت إند وتجيبي الرابط بتاعه حطيه هنا
+  origin: '*', 
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
@@ -48,7 +48,6 @@ if (process.env.NODE_ENV !== 'production') {
   app.listen(PORT, async () => {
     console.log(`Server running locally on port ${PORT}`);
     try {
-      // الـ Cleanup هيشتغل لوكال بس عشان ما يعطلش فيرسل
       await runCartCleanup();
       startCleanupCron();
     } catch (err) {

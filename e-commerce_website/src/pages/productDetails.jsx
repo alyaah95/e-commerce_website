@@ -1,14 +1,3 @@
-// ProductDetails.jsx  —  FIXED
-// Changes:
-//   FIX 4 (UX / race conditions):
-//     - A new localQty state tracks what the user *wants* to add.
-//     - The "+" button increments localQty only (no network call).
-//     - The "−" button decrements localQty only (no network call).
-//     - "Add to Cart" is the ONLY button that dispatches to the backend.
-//       It sends localQty as the quantity delta to add.
-//     - After a successful add, localQty resets to 1.
-//   This means there is exactly one in-flight request at a time for
-//   this product, eliminating all race conditions from this page.
 
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router';
@@ -31,7 +20,6 @@ const ProductDetails = () => {
   const [showReviews, setShowReviews]       = useState(false);
   const [activeImage, setActiveImage]       = useState(0);
 
-  // FIX 4: local counter — tracks how many the user wants to add THIS session
   const [localQty, setLocalQty] = useState(1);
 
   const dispatch = useDispatch();
@@ -39,7 +27,6 @@ const ProductDetails = () => {
   const navigate = useNavigate();
 
   const productsInCart  = useSelector((state) => state.productCart.products);
-  // FIX 3: compare as Numbers to match the Redux store
   const productInCart   = productsInCart.find((p) => p.id === Number(params.id));
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
@@ -56,7 +43,6 @@ const ProductDetails = () => {
     fetchProductDetails();
   }, [params.id]);
 
-  // Reset the local counter whenever the product changes
   useEffect(() => {
     setLocalQty(1);
   }, [params.id]);
@@ -67,7 +53,6 @@ const ProductDetails = () => {
   // How many more can the user add
   const remainingStock = availableStock - quantityInCart;
 
-  // ── FIX 4: local counter handlers ─────────────────────────────────────────
   const handleIncrement = () => {
     // Cannot exceed remaining stock with what we're about to add
     if (localQty >= remainingStock) {
@@ -82,7 +67,6 @@ const ProductDetails = () => {
     setLocalQty((q) => q - 1);
   };
 
-  // ── FIX 4: single backend action ──────────────────────────────────────────
   const handleAddToCart = async () => {
     if (!isAuthenticated) {
       alert('Please log in to add items to your cart.');
@@ -295,10 +279,8 @@ const ProductDetails = () => {
 
             <div className="pd-divider" />
 
-            {/* ── FIX 4: local quantity counter ── */}
             <div className="pd-qty-row">
               <div className="pd-qty-controls">
-                {/* − only changes localQty, no network call */}
                 <button
                   className="pd-qty-btn"
                   onClick={handleDecrement}
@@ -312,7 +294,6 @@ const ProductDetails = () => {
 
                 <span className="pd-qty-value">{localQty}</span>
 
-                {/* + only changes localQty, no network call */}
                 <button
                   className="pd-qty-btn"
                   onClick={handleIncrement}
@@ -347,7 +328,6 @@ const ProductDetails = () => {
                 Buy Now
               </button>
 
-              {/* FIX 4: this is the ONLY button that talks to the backend */}
               <button
                 className="pd-btn pd-btn--cart"
                 onClick={handleAddToCart}

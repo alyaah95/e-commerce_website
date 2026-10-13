@@ -1,10 +1,6 @@
-/* ============================================================
-   navbar.css — SaaS-grade Navbar
-   Fixes: horizontal overflow / bad spacing on narrow screens
-   Bootstrap 5 + React-Bootstrap 2.10
-   ============================================================ */
 
-/* ── Variables ────────────────────────────────────────────────── */
+
+/* Variables */
 :root {
     --nav-bg: #2c3e50;
     --nav-bg-dark: #243342;
@@ -19,7 +15,7 @@
     --nav-transition: all 0.3s ease-in-out;
 }
 
-/* ── Base ─────────────────────────────────────────────────────── */
+/* Base */
 .navbar {
     width: 100%;
     background-color: var(--nav-bg);
@@ -32,7 +28,7 @@
     font-family: 'Poppins', sans-serif;
 }
 
-/* ── Container ───────────────────────────────────────────────── */
+/* Container */
 .navbar-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -45,7 +41,7 @@
     gap: 1rem;
 }
 
-/* ── Brand / Logo ────────────────────────────────────────────── */
+/* Brand / Logo */
 .navbar-brand {
     flex-shrink: 0;
     /* never let the logo shrink */
@@ -67,7 +63,7 @@
     transform: translateY(-2px) scale(1.02);
 }
 
-/* ── Right-side menu ─────────────────────────────────────────── */
+/* Right-side menu */
 .navbar-menu {
     display: flex;
     align-items: center;
@@ -79,7 +75,7 @@
     /* allow flex children to shrink below content size */
 }
 
-/* ── Auth section ─────────────────────────────────────────────── */
+/* Auth section */
 .navbar-auth {
     display: flex;
     align-items: center;
@@ -144,7 +140,7 @@
     box-shadow: none;
 }
 
-/* ── Cart ─────────────────────────────────────────────────────── */
+/* Cart */
 .navbar-cart {
     position: relative;
     padding: 0.5rem;
@@ -188,7 +184,7 @@
     padding: 0 3px;
 }
 
-/* ── Wishlist ─────────────────────────────────────────────────── */
+/* Wishlis */
 .navbar-wishlist {
     flex-shrink: 0;
 }
@@ -208,7 +204,7 @@
     transform: translateY(-2px) scale(1.05);
 }
 
-/* ── Orders pill ──────────────────────────────────────────────── */
+/* Orders pill  */
 .orders-pill-btn {
     display: flex;
     align-items: center;
@@ -234,7 +230,7 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* ── Language Dropdown ────────────────────────────────────────── */
+/*  Language Dropdown */
 .dropdown-toggle {
     background-color: rgba(255, 255, 255, 0.12) !important;
     border-color: rgba(255, 255, 255, 0.2) !important;
@@ -277,16 +273,8 @@
     color: var(--nav-text);
 }
 
-/* ============================================================
-   RESPONSIVE BREAKPOINTS
-   The root cause of the "bad space on narrow screens" is all
-   items cramming into one row. We solve this by:
-   1. Hiding text labels progressively
-   2. Compressing paddings
-   3. Allowing a second row below ~576 px
-   ============================================================ */
 
-/* ── Tablet (≤ 900px) ─────────────────────────────────────────── */
+/* Tablet (≤ 900px)  */
 @media (max-width: 900px) {
     .navbar-logo {
         font-size: 1.25rem;
@@ -324,7 +312,7 @@
     }
 }
 
-/* ── Mobile (≤ 576px) ─────────────────────────────────────────── */
+/* Mobile (≤ 576px) */
 @media (max-width: 576px) {
     .navbar {
         padding: 0.6rem 0;

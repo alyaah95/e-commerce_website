@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { forgotPassword } from '../store/slices/authSlice';
-import { RiMailSendLine } from 'react-icons/ri'; // أيقونة إرسال بريد
+import { RiMailSendLine } from 'react-icons/ri'; 
 import "./forgotPassword.css";
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
-    const [status, setStatus] = useState({ type: '', message: '' }); // لتنظيم رسائل النجاح والخطأ
+    const [status, setStatus] = useState({ type: '', message: '' }); 
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { loading } = useSelector((state) => state.auth);
@@ -22,7 +22,6 @@ const ForgotPassword = () => {
             const resultAction = await dispatch(forgotPassword(email)).unwrap();
             setStatus({ type: 'success', message: resultAction });
             
-            // التوجيه لصفحة الـ Reset بعد 2.5 ثانية
             setTimeout(() => {
                 navigate(`/reset-password?email=${encodeURIComponent(email)}`);
             }, 2500); 
@@ -38,7 +37,7 @@ const ForgotPassword = () => {
                 <div className="row justify-content-center">
                     <div className="col-md-5 col-lg-4">
                         <div className="card border-0 shadow-lg p-4 rounded-4 text-center">
-                            {/* أيقونة جذابة في الأعلى */}
+
                             <div className="icon-badge bg-primary-light text-primary mb-3 mx-auto">
                                 <RiMailSendLine size={40} />
                             </div>

@@ -10,7 +10,7 @@ if (!process.env.DATABASE_URL) {
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
-    rejectUnauthorized: false // مهمة جداً للداتابيز الأونلاين
+    rejectUnauthorized: false 
   },
   max: 2,
   idleTimeoutMillis: 10000,

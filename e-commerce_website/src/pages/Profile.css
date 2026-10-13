@@ -1,9 +1,4 @@
-/* ============================================================
-   Profile.css  —  Premium Profile Page
-   Consistent with site design system:
-   Same tokens as Checkout / Cart / Orders / Wishlist
-   Bootstrap 5 compatible — no class conflicts
-   ============================================================ */
+
 
 /* ── Variables — identical to every other page on the site ─── */
 :root {
@@ -37,7 +32,7 @@
     --prf-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ── Page shell ──────────────────────────────────────────────── */
+/*  Page shell  */
 .prf-page {
     background: var(--prf-bg);
     min-height: 100vh;
@@ -49,9 +44,9 @@
     margin: 0 auto;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* 
    PAGE HEADER
-═══════════════════════════════════════════════════════════════ */
+ */
 .prf-page-header {
     margin-bottom: 2rem;
 }
@@ -70,9 +65,9 @@
     margin: 0;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* 
    LOADING / ERROR STATES
-═══════════════════════════════════════════════════════════════ */
+ */
 .prf-fullscreen-center {
     display: flex;
     flex-direction: column;
@@ -133,9 +128,9 @@
     display: flex;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* 
    MAIN LAYOUT — sidebar + content
-═══════════════════════════════════════════════════════════════ */
+ */
 .prf-layout {
     display: grid;
     grid-template-columns: 240px 1fr;
@@ -143,9 +138,9 @@
     align-items: start;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* 
    AVATAR SIDEBAR
-═══════════════════════════════════════════════════════════════ */
+ */
 .prf-sidebar {
     position: sticky;
     top: 1.5rem;
@@ -251,9 +246,9 @@
     transform: translateY(0);
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* 
    ALERT BANNERS
-═══════════════════════════════════════════════════════════════ */
+ */
 .prf-alert {
     display: flex;
     align-items: center;
@@ -290,9 +285,9 @@
     color: #14532d;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* 
    CONTENT PANELS
-═══════════════════════════════════════════════════════════════ */
+ */
 .prf-main {
     display: flex;
     flex-direction: column;
@@ -361,9 +356,9 @@
     margin: 0;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* 
    READ-ONLY INFO ROWS
-═══════════════════════════════════════════════════════════════ */
+ */
 .prf-info-rows {
     display: flex;
     flex-direction: column;
@@ -407,10 +402,10 @@
     word-break: break-all;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* 
    EDIT MODE — FORM FIELDS
    Same patterns as CheckoutPage inputs
-═══════════════════════════════════════════════════════════════ */
+ */
 .prf-fields {
     padding: 1.4rem 1.5rem;
     display: flex;
@@ -582,9 +577,9 @@
     outline-offset: 2px;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* 
    RESPONSIVE
-═══════════════════════════════════════════════════════════════ */
+ */
 
 /* Tablet — sidebar moves above content */
 @media (max-width: 768px) {
@@ -690,10 +685,10 @@
     }
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* 
    WARNING BUTTON VARIANT  (ChangePasswordForm submit)
    Orange-toned to signal a sensitive/destructive action
-═══════════════════════════════════════════════════════════════ */
+ */
 .prf-btn--warning {
     background: #fff7ed;
     color: #c2410c;
@@ -726,11 +721,11 @@
     border-top-color: #c2410c;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* 
    CHANGE PASSWORD FORM  (.cpf-*)
    Input wrapper + icon + eye-toggle, scoped to this component.
    Reuses all .prf-field / .prf-label / .prf-input classes.
-═══════════════════════════════════════════════════════════════ */
+ */
 .cpf-form {
     display: flex;
     flex-direction: column;

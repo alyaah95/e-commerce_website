@@ -17,19 +17,15 @@ export const logoutUser = createAsyncThunk(
     'auth/logoutUser',
     async (_, { dispatch, rejectWithValue }) => {
         try {
-            // 1. تنظيف التوثيق (Local Storage + Axios Header)
             clearAuthToken(); 
             
-            // 2. تحديث حالة الـ Auth Slice (Reducer متزامن)
-            dispatch(logout()); // هذا هو الـ Reducer الذي قمتِ بتعريفه في هذا الـ Slice
+            dispatch(logout()); 
             
-            // 3. تنظيف حالة Slices الأخرى
-            // يجب استدعاء Action resetCart من ملف productCartSlice.js
+
             dispatch(resetCart()); 
             
             return true;
         } catch (error) {
-            // ... منطق التعامل مع الأخطاء (إذا كان هناك مكالمة API لتسجيل الخروج)
             clearAuthToken();
             dispatch(logout());
             dispatch(resetCart());
@@ -42,9 +38,8 @@ export const fetchUserProfile = createAsyncThunk(
     'auth/fetchUserProfile',
     async (_, { rejectWithValue }) => {
         try {
-            // يستخدم api.get المسار المحمي، والتوكن يضاف تلقائياً بواسطة Interceptor
             const response = await api.get('/users/profile'); 
-            return response.data.user; // إرجاع بيانات المستخدم
+            return response.data.user;
         } catch (error) {
             console.error("[Thunk] fetchUserProfile error:", error.response?.data?.message || error.message);
             return rejectWithValue(error.response?.data?.message || 'Failed to fetch user profile.');
@@ -56,10 +51,8 @@ export const updateUserProfile = createAsyncThunk(
   'auth/updateUserProfile',
   async (userData, { rejectWithValue }) => {
       try {
-          // userData تحتوي على { username, email }
           const response = await api.put('/users/profile', userData); 
           
-          // نُعيد البيانات المُحدَّثة لاستخدامها في الـ Reducer
           return response.data.user; 
       } catch (error) {
           console.error("[Thunk] updateUserProfile error:", error.response?.data?.message || error.message);
@@ -133,7 +126,7 @@ const authSlice = createSlice({
       state.loading = false;
       state.error = null;
       state.user = null;
-      localStorage.removeItem('token'); // ينظف الـ localStorage هنا
+      localStorage.removeItem('token'); 
     },
     setLoading: (state, action) => {
       state.loading = action.payload;
@@ -145,16 +138,14 @@ const authSlice = createSlice({
 
   extraReducers: (builder) => {
     builder
-      // ----------------------------------------------------
-      // حالات جلب بيانات البروفايل
-      // ----------------------------------------------------
+
       .addCase(fetchUserProfile.pending, (state) => {
           state.loading = true;
           state.error = null;
       })
       .addCase(fetchUserProfile.fulfilled, (state, action) => {
           state.loading = false;
-          state.user = action.payload; // ✅ حفظ بيانات البروفايل
+          state.user = action.payload; 
           state.error = null;
       })
       .addCase(fetchUserProfile.rejected, (state, action) => {
@@ -169,7 +160,7 @@ const authSlice = createSlice({
       })
       .addCase(updateUserProfile.fulfilled, (state, action) => {
           state.loading = false;
-          state.user = action.payload; // 🛑 تحديث بيانات المستخدم في الـ Store
+          state.user = action.payload; 
           state.error = null;
       })
       .addCase(updateUserProfile.rejected, (state, action) => {

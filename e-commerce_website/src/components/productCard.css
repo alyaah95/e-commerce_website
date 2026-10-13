@@ -1,9 +1,6 @@
-/* ============================================================
-   productCard.css — SaaS-grade card UI
-   Works alongside Bootstrap 5 + React-Bootstrap 2.10
-   ============================================================ */
 
-/* ── Variables ────────────────────────────────────────────────── */
+
+/* Variables  */
 :root {
     --pc-primary: #0d6efd;
     --pc-primary-dark: #0a58ca;
@@ -17,7 +14,7 @@
     --pc-transition: all 0.3s ease-in-out;
 }
 
-/* ── Card Shell ──────────────────────────────────────────────── */
+/* Card Shell */
 .product-card {
     border-radius: var(--pc-radius) !important;
     overflow: hidden;
@@ -32,14 +29,14 @@
     box-shadow: var(--pc-shadow-hover) !important;
 }
 
-/* ── Image Wrapper ───────────────────────────────────────────── */
+/* Image Wrapper */
 .product-card__image-wrap {
     background: #f8f9fa;
     overflow: hidden;
     border-bottom: 1px solid var(--pc-border);
 }
 
-/* ── Product Image ───────────────────────────────────────────── */
+/* Product Image  */
 .product-card__img {
     transition: transform 0.4s ease-in-out;
     width: 100%;
@@ -50,7 +47,7 @@
     transform: scale(1.06);
 }
 
-/* ── Stock Badge ─────────────────────────────────────────────── */
+/* Stock Badge */
 .product-card__badge {
     position: absolute;
     top: 10px;
@@ -65,7 +62,7 @@
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
-/* ── Wishlist Button Position ────────────────────────────────── */
+/* Wishlist Button Position */
 .product-card__wishlist {
     position: absolute;
     top: 8px;
@@ -73,7 +70,7 @@
     z-index: 2;
 }
 
-/* ── Title ───────────────────────────────────────────────────── */
+/* Title */
 .product-card__title {
     font-size: 0.92rem;
     line-height: 1.4;
@@ -85,20 +82,20 @@
     overflow: hidden;
 }
 
-/* ── Description ─────────────────────────────────────────────── */
+/*  Description */
 .product-card__desc {
     font-size: 0.82rem;
     line-height: 1.5;
 }
 
-/* ── Price ───────────────────────────────────────────────────── */
+/* Price  */
 .product-card__price {
     font-size: 1.15rem;
     color: var(--pc-primary-dark);
     letter-spacing: -0.3px;
 }
 
-/* ── Details Button ──────────────────────────────────────────── */
+/* Details Button  */
 .product-card__details-btn {
     border-radius: 8px;
     font-size: 0.78rem;
@@ -116,7 +113,7 @@
     transform: translateY(-1px);
 }
 
-/* ── Add to Cart Button ──────────────────────────────────────── */
+/* Add to Cart Button  */
 .product-card__cart-btn {
     border-radius: 9px;
     font-size: 0.84rem;
@@ -138,13 +135,13 @@
     cursor: not-allowed;
 }
 
-/* ── Footer separator ────────────────────────────────────────── */
+/* Footer separator */
 .product-card__footer {
     border-top: 1px solid var(--pc-border);
     padding-top: 0.75rem;
 }
 
-/* ── Focus visible for accessibility ─────────────────────────── */
+/* Focus visible for accessibility  */
 .product-card__cart-btn:focus-visible,
 .product-card__details-btn:focus-visible {
     outline: 3px solid rgba(13, 110, 253, 0.4);

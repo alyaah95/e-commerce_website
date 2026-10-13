@@ -5,7 +5,7 @@ import api from "../apis/axiosConfig";
 import "./auth.css";
 
 const Register = () => {
-  /* ── All state — completely untouched ── */
+  /*  All state — completely untouched  */
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -29,7 +29,7 @@ const Register = () => {
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   const navigate = useNavigate();
 
-  /* ── All handlers — logic completely untouched ── */
+  /*  All handlers — logic completely untouched  */
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
@@ -118,7 +118,7 @@ const Register = () => {
     <div className="auth-page">
       <div className="auth-card auth-card--wide">
 
-        {/* ── Brand mark ── */}
+        {/*  Brand mark  */}
         <div className="auth-brand">
           <div className="auth-brand-icon">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">

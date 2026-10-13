@@ -8,7 +8,7 @@ const getAllOrders = async (req, res) => {
             `SELECT id, status, total_amount, created_at 
              FROM orders 
              WHERE user_id = $1 
-             ORDER BY created_at DESC`, // الأحدث أولاً
+             ORDER BY created_at DESC`, 
             [userId]
         );
 
@@ -21,14 +21,14 @@ const getAllOrders = async (req, res) => {
 
 const getOrderDetails = async (req, res) => {
     const userId = req.user.id;
-    const { orderId } = req.params; // رقم الطلب من المسار /orders/:orderId
+    const { orderId } = req.params; 
 
     if (!orderId) {
         return res.status(400).json({ message: 'Order ID is required.' });
     }
 
     try {
-        // 1. جلب بيانات الطلب الرئيسية (الحالة، العنوان، الإجمالي)
+
         const orderResult = await pool.query(
             `SELECT id, status, total_amount, shipping_address, created_at 
              FROM orders 
@@ -41,7 +41,7 @@ const getOrderDetails = async (req, res) => {
         }
         const order = orderResult.rows[0];
 
-        // 2. جلب العناصر الموجودة داخل هذا الطلب (order_items)
+
         const itemsResult = await pool.query(
             `SELECT product_id, title, price, quantity 
              FROM order_items 
@@ -49,7 +49,7 @@ const getOrderDetails = async (req, res) => {
             [orderId]
         );
 
-        // 3. دمج البيانات وإرجاعها
+
         res.status(200).json({
             ...order,
             items: itemsResult.rows,

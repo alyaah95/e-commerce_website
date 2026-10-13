@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changePassword } from '../store/slices/authSlice';
 
-/* ── Same regex as Register — logic untouched ── */
+
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-/* Shared inline field error — matches Profile.jsx's prf-field-error style */
+
 const FieldError = ({ msg }) => (
   <span className="prf-field-error">
     <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
@@ -22,7 +22,7 @@ const ChangePasswordForm = ({ onPasswordChangeSuccess }) => {
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.auth);
 
-  /* ── All original state — completely untouched ── */
+
   const [formData, setFormData] = useState({
     currentPassword: '',
     newPassword: '',
@@ -33,12 +33,12 @@ const ChangePasswordForm = ({ onPasswordChangeSuccess }) => {
   const [confirmNewPasswordError, setConfirmNewPasswordError] = useState(null);
   const [submissionError, setSubmissionError]               = useState(null);
 
-  /* ── UI-only: password visibility toggles ── */
+
   const [showCurrent, setShowCurrent] = useState(false);
   const [showNew, setShowNew]         = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
-  /* ── All original handlers — logic completely untouched ── */
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -98,7 +98,7 @@ const ChangePasswordForm = ({ onPasswordChangeSuccess }) => {
 
   const isPending = loading === true;
 
-  /* ── Eye-toggle button — reusable snippet ── */
+
   const EyeBtn = ({ visible, onToggle }) => (
     <button
       type="button"

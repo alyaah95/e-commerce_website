@@ -17,10 +17,8 @@ const ShoppingCart = () => {
   const token = localStorage.getItem("token");
   
   if (!token) {
-    // لو مش مسجل دخول، السلة لازم تفضى
     dispatch(setCartItems([]));
   }
-  // شيلنا الـ fetchCartItems تماماً من هنا لأن App.jsx شايلها بالفعل!
 }, [dispatch]);
 
   if (loading === "pending") {

@@ -4,7 +4,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../apis/axiosConfig';
 import axiosInstance from '../../apis/config';
 
-// ─── THUNKS ───────────────────────────────────────────────────────────────────
+//  THUNKS
 
 export const fetchCartItems = createAsyncThunk(
   'productCart/fetchCartItems',
@@ -108,11 +108,9 @@ export const placeOrderThunk = createAsyncThunk(
   }
 );
 
-// ─── HELPER ───────────────────────────────────────────────────────────────────
+//  HELPER 
 
-// FIX 1: stock is now a real second argument, not silently ignored
 const mapItemToProduct = (item, stock) => ({
-  // FIX 3: store ids as Numbers everywhere so comparisons never fail
   id: Number(item.product_id),
   title: item.title,
   image: item.image_url,
@@ -121,7 +119,7 @@ const mapItemToProduct = (item, stock) => ({
   stock: stock !== undefined ? stock : (item.stock ?? 0),
 });
 
-// ─── SLICE ────────────────────────────────────────────────────────────────────
+//  SLICE 
 
 const ProductCartSlice = createSlice({
   name: 'productCart',
@@ -152,7 +150,6 @@ const ProductCartSlice = createSlice({
     },
 
     removeProductLocal: (state, action) => {
-      // FIX 3: compare as Numbers
       const id = Number(action.payload);
       state.products = state.products.filter((p) => p.id !== id);
     },
@@ -178,7 +175,6 @@ const ProductCartSlice = createSlice({
       .addCase(fetchCartItems.fulfilled, (state, action) => {
         state.loading = 'succeeded';
         console.log("=== FETCH CART SUCCESS ===", action.payload);
-        // FIX 1: stock comes from the enriched payload, passed as second arg
         state.products = action.payload.map((item) =>
           mapItemToProduct(item, item.stock)
         );
@@ -197,14 +193,12 @@ const ProductCartSlice = createSlice({
         console.log("=== ADD PRODUCT SUCCESS ===", action.payload);
         const newItem = action.payload.item;
         const stock = action.payload.stock; // FIX 1: real stock value preserved
-        // FIX 3: compare as Numbers
         const id = Number(newItem.product_id);
         const existingProduct = state.products.find((p) => p.id === id);
         if (existingProduct) {
           existingProduct.quantity = newItem.quantity;
           existingProduct.stock = stock;
         } else {
-          // FIX 1: pass stock as second argument so it is never dropped
           state.products.push(mapItemToProduct(newItem, stock));
         }
       })

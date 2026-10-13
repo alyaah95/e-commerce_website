@@ -6,12 +6,11 @@ const jwt = require('jsonwebtoken');
 const pool = require('../db/db');
 const nodemailer = require('nodemailer');
 
-// إعداد "الناقل" باستخدام خدمة Gmail
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: process.env.Gmail_USER, // إيميلك الحقيقي
-    pass: process.env.Gmail_SeCRET  // الـ App Password (الـ 16 حرف اللي بتجيبيهم من جوجل)
+    user: process.env.Gmail_USER, 
+    pass: process.env.Gmail_SeCRET  
   }
 });
 
@@ -106,24 +105,20 @@ const forgotPassword = async (req, res) => {
     const userResult = await pool.query('SELECT id, email FROM users WHERE email = $1', [email]);
     const user = userResult.rows[0];
 
-    // ✅ استجابة موحدة للحماية
     const successMessage = { message: 'If the email exists, a password reset code has been sent.' };
 
     if (!user) {
         return res.status(200).json(successMessage);
     }
 
-    // 1. إنشاء رمز عشوائي سداسي الأرقام
     const resetToken = crypto.randomInt(100000, 999999).toString(); 
-    const expiry = new Date(Date.now() + 10 * 60000); // تقليل المدة لـ 10 دقائق (أكثر أماناً للأكواد)
+    const expiry = new Date(Date.now() + 10 * 60000); 
 
-    // 2. تحديث قاعدة البيانات
     await pool.query(
         'UPDATE users SET reset_token = $1, reset_token_expiry = $2 WHERE id = $3', 
         [resetToken, expiry, user.id]
     );
 
-    // 3. إرسال الإيميل الحقيقي باستخدام Nodemailer
     const mailOptions = {
       from: 'MyCart Bliss Support',
       to: user.email,
@@ -143,7 +138,6 @@ const forgotPassword = async (req, res) => {
       `
     };
 
-    // إرسال الرسالة فعلياً
     await transporter.sendMail(mailOptions);
 
     console.log(`✅ Email sent successfully to: ${user.email}`);
@@ -160,7 +154,6 @@ const resetPassword = async (req, res) => {
   const { email, token, newPassword } = req.body;
 
   try {
-    // 1. البحث عن المستخدم باستخدام البريد والرمز
     const userResult = await pool.query(
         'SELECT id, reset_token_expiry FROM users WHERE email = $1 AND reset_token = $2', 
         [email, token]
@@ -171,16 +164,13 @@ const resetPassword = async (req, res) => {
         return res.status(400).json({ message: 'Invalid token or email.' });
     }
 
-    // 2. التحقق من انتهاء الصلاحية
     if (new Date(user.reset_token_expiry) < Date.now()) {
         return res.status(400).json({ message: 'Token has expired.' });
     }
 
-    // 3. تشفير كلمة المرور الجديدة وتحديثها
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(newPassword, salt);
 
-    // 4. تحديث كلمة المرور ومسح الرمز وتاريخ انتهائه
     await pool.query(
         'UPDATE users SET password = $1, reset_token = NULL, reset_token_expiry = NULL WHERE id = $2', 
         [hashedPassword, user.id]

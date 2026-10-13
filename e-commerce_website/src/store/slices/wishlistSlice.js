@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// جلب البيانات المخزنة مسبقاً من المتصفح
 const savedWishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
 
 const wishlistSlice = createSlice({
@@ -12,11 +11,10 @@ const wishlistSlice = createSlice({
       const index = state.items.findIndex(item => item.id === product.id);
       
       if (index >= 0) {
-        state.items.splice(index, 1); // حذف إذا كان موجوداً
+        state.items.splice(index, 1); 
       } else {
-        state.items.push(product); // إضافة إذا لم يكن موجوداً
+        state.items.push(product); 
       }
-      // حفظ في الـ Local Storage
       localStorage.setItem('wishlist', JSON.stringify(state.items));
     },
     removeFromWishlist: (state, action) => {

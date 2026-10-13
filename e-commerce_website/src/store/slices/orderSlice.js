@@ -5,7 +5,6 @@ export const fetchAllOrders = createAsyncThunk(
     'productCart/fetchAllOrders',
     async (_, { rejectWithValue }) => {
         try {
-            // طلب GET على /api/orders
             const response = await api.get('/orders'); 
             return response.data;
         } catch (error) {
@@ -18,7 +17,6 @@ export const fetchOrderDetails = createAsyncThunk(
     'productCart/fetchOrderDetails',
     async (orderId, { rejectWithValue }) => {
         try {
-            // طلب GET على /api/orders/:orderId
             const response = await api.get(`/orders/${orderId}`); 
             return response.data;
         } catch (error) {
@@ -32,7 +30,6 @@ const orderSlice = createSlice({
     initialState: {
         loading: 'idle', 
         error: null,
-        // 🛑 حالات جديدة لتخزين بيانات الطلبات
         ordersList: [], 
         currentOrderDetails: null,
         productDetailsCache: {}
@@ -45,7 +42,7 @@ const orderSlice = createSlice({
             })
             .addCase(fetchAllOrders.fulfilled, (state, action) => {
                 state.loading = 'succeeded';
-                state.ordersList = action.payload; // تخزين القائمة
+                state.ordersList = action.payload;
             })
             .addCase(fetchAllOrders.rejected, (state, action) => {
                 state.loading = 'failed';
@@ -59,7 +56,7 @@ const orderSlice = createSlice({
             })
             .addCase(fetchOrderDetails.fulfilled, (state, action) => {
                 state.loading = 'succeeded';
-                state.currentOrderDetails = action.payload; // تخزين تفاصيل الطلب الحالي
+                state.currentOrderDetails = action.payload; 
             })
             .addCase(fetchOrderDetails.rejected, (state, action) => {
                 state.loading = 'failed';

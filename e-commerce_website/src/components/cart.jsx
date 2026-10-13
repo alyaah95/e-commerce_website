@@ -1,18 +1,3 @@
-// Cart.jsx  —  FIXED
-// Changes:
-//   FIX 4 (UX / race conditions):
-//     - Each cart item has its own local quantity counter in a Map stored in
-//       React state (localQuantities).  The "+" and "−" buttons ONLY update
-//       this local map — zero network calls.
-//     - A new "Update" button appears on a row when localQty differs from the
-//       committed quantity.  Clicking it is the single action that dispatches
-//       updateProductQuantityBackend.
-//     - handleRemove is unchanged — it still calls the backend immediately
-//       because removing an item is unambiguous and needs no staging.
-//     - "Buy Now" uses the local quantity so the checkout total is accurate.
-//     - localQuantities is seeded from Redux on first render and whenever
-//       products change (e.g. after a fetch).
-
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -27,8 +12,7 @@ const Cart = () => {
   const dispatch  = useDispatch();
   const navigate  = useNavigate();
 
-  // FIX 4: local quantity map keyed by product.id
-  // Seeded from Redux so it always starts in sync with the server state.
+
   const [localQuantities, setLocalQuantities] = useState({});
 
   useEffect(() => {
@@ -44,13 +28,13 @@ const Cart = () => {
   const setLocal = (id, qty) =>
     setLocalQuantities((prev) => ({ ...prev, [id]: qty }));
 
-  // ── Handlers ────────────────────────────────────────────────────────────────
+  // Handlers 
 
   const handleRemove = async (product) => {
     await dispatch(removeProductFromCartBackend(product.id));
   };
 
-  // FIX 4: + only updates local state
+
   const handleIncrement = (product) => {
     const current = getLocal(product.id);
     if (current >= product.stock) {
@@ -60,21 +44,21 @@ const Cart = () => {
     setLocal(product.id, current + 1);
   };
 
-  // FIX 4: − only updates local state (removes item if it would hit 0)
+
   const handleDecrement = (product) => {
     const current = getLocal(product.id);
     if (current <= 1) {
-      // Dropping to 0 means remove — this IS a backend action
+
       handleRemove(product);
     } else {
       setLocal(product.id, current - 1);
     }
   };
 
-  // FIX 4: single backend submit for quantity changes
+
   const handleUpdate = async (product) => {
     const newQty = getLocal(product.id);
-    if (newQty === product.quantity) return; // nothing changed
+    if (newQty === product.quantity) return; 
     await dispatch(
       updateProductQuantityBackend({ productId: product.id, quantity: newQty })
     );

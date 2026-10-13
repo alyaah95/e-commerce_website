@@ -11,7 +11,7 @@ const WishlistButton = ({ product }) => {
     <button 
       className={`wishlist-btn ${isFavorite ? 'active' : ''}`}
       onClick={(e) => {
-        e.preventDefault(); // منع الانتقال لصفحة التفاصيل عند الضغط على القلب
+        e.preventDefault(); 
         dispatch(toggleWishlist(product));
       }}
     >

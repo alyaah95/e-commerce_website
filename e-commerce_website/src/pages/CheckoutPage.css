@@ -1,9 +1,4 @@
-/* ============================================================
-   CheckoutPage.css  —  Premium Checkout Redesign
-   Consistent with site design system:
-   Same tokens as Cart / Orders / Wishlist / ProductCard
-   Bootstrap 5 compatible — no class conflicts
-   ============================================================ */
+
 
 /* ── Variables — identical to every other page on the site ─── */
 :root {
@@ -37,7 +32,7 @@
     --chk-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ── Page shell ──────────────────────────────────────────────── */
+/*  Page shell  */
 .chk-page {
     background: var(--chk-bg);
     min-height: 100vh;
@@ -49,9 +44,9 @@
     margin: 0 auto;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* 
    PAGE HEADER
-═══════════════════════════════════════════════════════════════ */
+ */
 .chk-page-header {
     margin-bottom: 2rem;
 }
@@ -70,9 +65,9 @@
     margin: 0;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* 
    LOADING STATE
-═══════════════════════════════════════════════════════════════ */
+ */
 .chk-fullscreen-center {
     display: flex;
     flex-direction: column;
@@ -104,10 +99,10 @@
     }
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* 
    TWO-COLUMN LAYOUT
    form col (left) + sticky summary col (right)
-═══════════════════════════════════════════════════════════════ */
+ */
 .chk-layout {
     display: grid;
     grid-template-columns: 1fr 320px;
@@ -115,16 +110,16 @@
     align-items: start;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* 
    FORM PANELS (left column)
-═══════════════════════════════════════════════════════════════ */
+ */
 .chk-form-col {
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
 }
 
-/* ── Panel card ── */
+/*  Panel card  */
 .chk-panel {
     background: var(--chk-surface);
     border-radius: var(--chk-radius-xl);
@@ -276,9 +271,9 @@
     margin-top: 0.2rem;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* 
    ORDER SUMMARY SIDEBAR (right column)
-═══════════════════════════════════════════════════════════════ */
+ */
 .chk-summary-col {
     position: sticky;
     top: 1.5rem;
@@ -405,7 +400,7 @@
     letter-spacing: -0.5px;
 }
 
-/* ── Pay button ── */
+/*  Pay button  */
 .chk-pay-btn {
     width: 100%;
     display: flex;
@@ -483,9 +478,9 @@
     margin: 0;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* 
    RESPONSIVE
-═══════════════════════════════════════════════════════════════ */
+ */
 
 /* Tablet — summary drops below form */
 @media (max-width: 860px) {

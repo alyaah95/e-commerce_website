@@ -1,24 +1,13 @@
-// cartController.js  —  FIXED
-// Changes:
-//   1. getCartItems: removed the inline DELETE (was racing with the cron job and
-//      causing the 1-hr vs 24-hr mismatch). The cron job owns deletion; this
-//      endpoint only reads.
-//   2. All queries that match on product_id now cast $N to INTEGER so the
-//      PostgreSQL column type (int) never rejects a string coming from the
-//      JS side.  This was the silent "0 rows updated" bug.
-//   3. addProductToCart: productId is parsed to an integer before use.
-//   4. updateCartItemQuantity / removeProductFromCart: same cast.
-//   5. placeOrder: placeholder cast added so IN (…) works with integer IDs.
+
 
 const pool = require('../db/db');
 
-// ─── ADD / UPDATE ─────────────────────────────────────────────────────────────
+//  ADD / UPDATE 
 const addProductToCart = async (req, res) => {
   console.log("ADD TO CART REQUEST USER OBJECT:", req.user);
   const userId = req.user.id;
   const { productId, title, imageUrl, price, quantity } = req.body;
 
-  // FIX 2 & 3: always work with an integer product ID
   const productIdInt = parseInt(productId, 10);
 
   if (!productIdInt || !title || !imageUrl || !price || !quantity || quantity <= 0) {
@@ -66,7 +55,7 @@ const addProductToCart = async (req, res) => {
   }
 };
 
-// ─── GET ──────────────────────────────────────────────────────────────────────
+//  GET 
 const getCartItems = async (req, res) => {
   console.log("=========================================");
   console.log("FETCH REQUEST USER OBJECT:", req.user);
@@ -95,7 +84,7 @@ const getCartItems = async (req, res) => {
   }
 };
 
-// ─── UPDATE QUANTITY ──────────────────────────────────────────────────────────
+//  UPDATE QUANTITY 
 const updateCartItemQuantity = async (req, res) => {
   const userId = req.user.id;
   // FIX 2: cast to integer
@@ -134,10 +123,9 @@ const updateCartItemQuantity = async (req, res) => {
   }
 };
 
-// ─── REMOVE ───────────────────────────────────────────────────────────────────
+//  REMOVE 
 const removeProductFromCart = async (req, res) => {
   const userId = req.user.id;
-  // FIX 2: cast to integer
   const productId = parseInt(req.params.productId, 10);
 
   if (!productId) {
@@ -166,7 +154,7 @@ const removeProductFromCart = async (req, res) => {
   }
 };
 
-// ─── PLACE ORDER ──────────────────────────────────────────────────────────────
+//  PLACE ORDER ──────────────────────────────────────────────────────────────
 const placeOrder = async (req, res) => {
   const userId = req.user.id;
   const { shippingAddress, totalAmount, items, isSingleProduct } = req.body;
@@ -180,7 +168,6 @@ const placeOrder = async (req, res) => {
       .json({ message: 'Missing address or total amount for order.' });
   }
 
-  // FIX 2: cast all incoming product IDs to integers
   const productIdsToProcess = items.map((item) => parseInt(item.productId, 10));
   const placeholder = productIdsToProcess
     .map((_, i) => `$${i + 2}`)

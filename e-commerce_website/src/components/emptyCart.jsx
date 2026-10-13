@@ -6,7 +6,6 @@ const EmptyCart = () => {
         <div className="ec-page">
             <div className="ec-container">
                 <div className="ec-card">
-                    {/* The image and its colours are kept exactly as requested */}
                     <img
                         src="https://i.imgur.com/dCdflKN.png"
                         width="130"

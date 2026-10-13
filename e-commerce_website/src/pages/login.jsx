@@ -8,20 +8,20 @@ import api from "../apis/axiosConfig";
 import "./auth.css";
 
 const Login = () => {
-  /* ── All original state — completely untouched ── */
+  /*  All original state — completely untouched  */
   const [formData, setFormData] = useState({ email: "", password: "" });
   const navigate  = useNavigate();
   const dispatch  = useDispatch();
   const { loading, error } = useSelector((state) => state.auth);
 
-  /* ── New UI-only state: client-side field errors + eye toggle ── */
+  /*  New UI-only state: client-side field errors + eye toggle  */
   const [emailError,    setEmailError]    = useState(null);
   const [passwordError, setPasswordError] = useState(null);
   const [showPassword,  setShowPassword]  = useState(false);
 
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-  /* ── Validation helpers ── */
+  /*  Validation helpers  */
   const validateEmail = (val) => {
     if (!val)                     { setEmailError("Email is required."); return false; }
     if (!emailRegex.test(val))    { setEmailError("Please enter a valid email address."); return false; }
@@ -34,7 +34,7 @@ const Login = () => {
     setPasswordError(null); return true;
   };
 
-  /* ── All original handlers — logic completely untouched ── */
+  /*  All original handlers — logic completely untouched  */
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -92,7 +92,7 @@ const Login = () => {
     <div className="auth-page">
       <div className="auth-card">
 
-        {/* ── Brand mark ── */}
+        {/*  Brand mark  */}
         <div className="auth-brand">
           <div className="auth-brand-icon">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -198,7 +198,7 @@ const Login = () => {
 
         </form>
 
-        {/* ── Don't have an account? ── */}
+        {/*  Don't have an account?  */}
         <p className="auth-switch">
           Don't have an account?{" "}
           <Link to="/register" className="auth-switch-link">Create one now</Link>

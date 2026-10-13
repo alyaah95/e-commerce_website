@@ -93,7 +93,6 @@ const ResetPassword = () => {
                             {submissionError && <div className="alert alert-danger border-0 text-center">{submissionError}</div>}
 
                             <form onSubmit={handleSubmit}>
-                                {/* حقل الـ Token */}
                                 <div className="mb-3">
                                     <label className="form-label fw-semibold">Verification Code</label>
                                     <div className="input-group">
@@ -112,7 +111,7 @@ const ResetPassword = () => {
                                     </div>
                                 </div>
 
-                                {/* حقل كلمة المرور */}
+                             
                                 <div className="mb-3">
                                     <label className="form-label fw-semibold">New Password</label>
                                     <input
@@ -127,7 +126,7 @@ const ResetPassword = () => {
                                     />
                                 </div>
 
-                                {/* تأكيد كلمة المرور */}
+                               
                                 <div className="mb-4">
                                     <label className="form-label fw-semibold">Confirm Password</label>
                                     <input

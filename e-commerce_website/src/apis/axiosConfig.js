@@ -36,13 +36,11 @@ api.interceptors.response.use(
 
       if (status === 401 && error.config.url !== '/auth/login' && tokenExists) { 
             
-            // 1. تنظيف الـ Axios Header
+
             clearAuthToken();
             
-            // 🛑 2. تنظيف Local Storage مباشرة هنا لضمان عمل initialState صحيح بعد إعادة التحميل!
             localStorage.removeItem('token'); 
 
-            // 3. إعادة التوجيه الإجبارية
             window.location.href = '/login';
 
             return Promise.reject(error);

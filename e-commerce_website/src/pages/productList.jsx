@@ -143,7 +143,7 @@ const ProductList = () => {
         ) : (
           <div className="col-12 d-flex justify-content-center align-items-center w-100">
             <div className="empty-state-container w-100">
-              <div className="empty-state shadow-sm"> {/* أضفت shadow-sm لمظهر أفضل */}
+              <div className="empty-state shadow-sm"> 
                 <div className="empty-state-icon">🔍</div>
                 <h5 className="fw-semibold mb-1 mt-3">No products found</h5>
                 <p className="text-muted small mb-0">Try adjusting your search or filters</p>
